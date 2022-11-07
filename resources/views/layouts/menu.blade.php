@@ -1,13 +1,13 @@
 <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('projects.index') }}">
         <i class="nav-icon fa fa-tasks text-info"></i>
-        <span>Projects</span>
+        <span>Project Register</span>
     </a>
 </li>
 <li class="nav-item {{ Request::is('rABS*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('rABS.index') }}">
         <i class="nav-icon fa fa-list text-warning"></i>
-        <span>RAB</span>
+        <span>RAB Project</span>
     </a>
 </li>
 <li class="d-none nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">
