@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('invoices', App\Http\Controllers\invoicesController::class);
 });
 
+//Route search
+Route::get('/project', [App\Http\Controllers\projectController::class, 'search'])->name('search');
+
 
 Route::resource('clients', App\Http\Controllers\clientsController::class);
 
@@ -45,3 +48,9 @@ Route::resource('revenueInvoices', App\Http\Controllers\revenue_invoiceControlle
 
 
 Route::resource('revenuePayments', App\Http\Controllers\revenue_paymentController::class);
+
+
+Route::resource('laporan_mingguan', App\Http\Controllers\lap_proyekController::class);
+Route::get('loaddata', [App\Http\Controllers\lap_proyekController::class, 'loaddata']);
+Route::get('edit_lap', [App\Http\Controllers\lap_proyekController::class, 'edit']);
+

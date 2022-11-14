@@ -17,13 +17,28 @@ class revenue_invoiceRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'nomor_invoice',
-        'tanggal_invoice',
-        'nilai_invoice',
-        'project_id',
+        'no_invoice',
+        'gl_invoice',
+        'id_customer',
+        'id_project',
+        'tgl_jatuh_tempo',
+        'uraian_invoice',
+        'nilai_rp',
+        'nilai_usd',
+        'ppn_rp',
+        'ppn_usd',
+        'kd_dep',
+        'kd_div',
+        'bln',
+        'data_valid',
+        'pic',
+        'ar_age',
+        'tgl_bayar',
+        'status',
         'keterangan',
-        'termin',
-        'periode'
+        'tipe',
+        'bln_byr',
+        'termin'
     ];
 
     /**

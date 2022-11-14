@@ -33,6 +33,7 @@ class CreateProjectsTable extends Migration
             $table->string('rab_tgl_approved');
             $table->string('status');
             $table->text('catatan');
+            $table->string('created_by');
             $table->timestamps();
             $table->softDeletes();
         });

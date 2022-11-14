@@ -1,3 +1,27 @@
+<div class="form-group">
+    <form action="{{ route('search') }}" method="GET" class="form-horizontal">
+        <table >
+            <tr>
+                <td>Kode Project</td>
+                <td>:</td>
+                <td><input type="text" id="prjfind" name="prjfind" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Sales AM</td>
+                <td>:</td>
+                <td><input type="text" id="amfind" name="amfind" class="form-control"</td>
+            </tr>
+            <tr>
+                <td colspan=2></td>
+                <td>
+                    <button class='btn btn-info'>Cari</button>
+                    <a class='btn btn-secondary' href="{{ route('projects.index') }}">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 <div class="table-responsive-sm">
     <table class="table table-striped" id="projects-table">
         <thead>
@@ -64,3 +88,9 @@
         </tbody>
     </table>
 </div>
+
+@push('javascript')
+<script>
+   
+</script>
+@endpush

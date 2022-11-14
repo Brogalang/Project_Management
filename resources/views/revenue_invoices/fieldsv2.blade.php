@@ -60,7 +60,12 @@
             <select name="id_project" id="id_project" class="form-control" data-control="select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($prjopt as $prj)
-                    <option value='{{$prj->project_id}}'>{{$prj->project_id}}</option>
+                    @if($prj->project_id == $revenueInvoice->id_project)
+                        <option value='{{$prj->project_id}}' selected>{{$prj->project_id}}</option>
+                    @else{
+                        <option value='{{$prj->project_id}}'>{{$prj->project_id}}</option>
+                    }
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -93,8 +98,12 @@
             <select name="pic" id="pic" class="form-control" data-control="select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($useropt as $userpt)
-                    <option value='{{$userpt->NIK}}'>{{$userpt->NIK}} - {{$userpt->Nama}}</option>
-                   
+                    @if($userpt->NIK == $revenueInvoice->pic)
+                        <option value='{{$userpt->NIK}}' selected>{{$userpt->NIK}} - {{$userpt->Nama}}</option>
+                    @else{
+                        <option value='{{$userpt->NIK}}'>{{$userpt->NIK}} - {{$userpt->Nama}}</option>
+                    }
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -105,7 +114,12 @@
             <select name="kd_dep" id="kd_dep" class="form-control" data-control="select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($depopt as $deppt)
-                    <option value='{{$deppt->id}}'>{{$deppt->id}} - {{$deppt->nama_div_ext}}</option>
+                    @if($deppt->id == $revenueInvoice->kd_dep)
+                        <option value='{{$deppt->id}}' selected>{{$deppt->id}} - {{$deppt->nama_div_ext}}</option>
+                    @else{
+                        <option value='{{$deppt->id}}'>{{$deppt->id}} - {{$deppt->nama_div_ext}}</option>
+                    }
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -117,7 +131,12 @@
             <select name="kd_div" id="kd_div" class="form-control" data-control="select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($divopt as $divpt)
-                    <option value='{{$divpt->id}}'>{{$divpt->id}} - {{$divpt->subdivisi}}</option>
+                    @if($divpt->id == $revenueInvoice->kd_div)
+                        <option value='{{$divpt->id}}' selected>{{$divpt->id}} - {{$divpt->subdivisi}}</option>
+                    @else{
+                        <option value='{{$divpt->id}}'>{{$divpt->id}} - {{$divpt->subdivisi}}</option>
+                    }
+                    @endif
                 @endforeach
             </select>
         </div>

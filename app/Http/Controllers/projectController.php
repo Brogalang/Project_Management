@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateprojectRequest;
 use App\Repositories\projectRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\project;
+use Auth;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -22,6 +23,17 @@ class projectController extends AppBaseController
         $this->projectRepository = $projectRepo;
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->prjfind;
+        $salesam = $request->amfind;
+        $projects = project::where('project_id', 'like', "%" . $keyword . "%")
+                            ->where('sales_am', 'like', "%" . $salesam . "%")
+                            ->orderby('id','DESC')->get();
+        return view('projects.index', compact('projects'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
     /**
      * Display a listing of the project.
      *
@@ -31,10 +43,19 @@ class projectController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $projects = project::orderby('id', 'DESC')->get();
+        $auth=Auth::user()->Nama;
+        $projects = project::orderby('id', 'DESC')
+                            ->where('sales_am', 'like' , "%".$auth."%")
+                            ->get();
 
-        return view('projects.index')
-            ->with('projects', $projects);
+        // return view('projects.index')
+        //     ->with('projects', $projects);
+
+        return view('projects.index',compact('projects'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
+            
+        // return view('form.kary',compact('data','menus','jab','dep'))
+        // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

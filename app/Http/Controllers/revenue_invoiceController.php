@@ -7,8 +7,13 @@ use App\Http\Requests\Updaterevenue_invoiceRequest;
 use App\Repositories\revenue_invoiceRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\project;
+use App\Models\User;
+use App\Models\DivisiModel;
+use App\Models\SubDivisiModel;
 use Flash;
 use Response;
+use DB;
 
 class revenue_invoiceController extends AppBaseController
 {
@@ -31,7 +36,10 @@ class revenue_invoiceController extends AppBaseController
     {
         $revenueInvoices = $this->revenueInvoiceRepository->all();
 
-        return view('revenue_invoices.index')
+        $projectdb = DB::table('projects')
+                    ->join('revenue_invoices', 'revenue_invoices.id_project', '=', 'projects.project_id')
+                    ->get();
+        return view('revenue_invoices.index',compact('projectdb'))
             ->with('revenueInvoices', $revenueInvoices);
     }
 
@@ -42,7 +50,12 @@ class revenue_invoiceController extends AppBaseController
      */
     public function create()
     {
-        return view('revenue_invoices.create');
+        $prjopt=project::all();
+        $useropt=User::all();
+        $depopt=DivisiModel::all();
+        $divopt=SubDivisiModel::all();
+        return view('revenue_invoices.create',compact('prjopt','useropt','depopt','divopt'));
+        // return view('revenue_invoices.create');
     }
 
     /**
@@ -79,8 +92,23 @@ class revenue_invoiceController extends AppBaseController
 
             return redirect(route('revenueInvoices.index'));
         }
+        $projectdb = DB::table('projects')
+                    ->join('revenue_invoices', 'revenue_invoices.id_project', '=', 'projects.project_id')
+                    ->get();
+        $picdb = DB::table('tb_datapribadi')
+                    ->join('revenue_invoices', 'revenue_invoices.pic', '=', 'tb_datapribadi.NIK')
+                    ->get();
+        $depdb = DB::table('tbldivmaster')
+                    ->join('revenue_invoices', 'revenue_invoices.kd_dep', '=', 'tbldivmaster.id')
+                    ->get();
+        // echo"<pre>";
+        // print_r($depdb);
+        // die();
+        $divdb = DB::table('tb_subdivisi')
+                    ->join('revenue_invoices', 'revenue_invoices.kd_div', '=', 'tb_subdivisi.id')
+                    ->get();
 
-        return view('revenue_invoices.show')->with('revenueInvoice', $revenueInvoice);
+        return view('revenue_invoices.show',compact('projectdb','picdb','depdb','divdb'))->with('revenueInvoice', $revenueInvoice);
     }
 
     /**
@@ -93,6 +121,10 @@ class revenue_invoiceController extends AppBaseController
     public function edit($id)
     {
         $revenueInvoice = $this->revenueInvoiceRepository->find($id);
+        $prjopt=project::all();
+        $useropt=User::all();
+        $depopt=DivisiModel::all();
+        $divopt=SubDivisiModel::all();
 
         if (empty($revenueInvoice)) {
             Flash::error('Revenue Invoice not found');
@@ -100,7 +132,7 @@ class revenue_invoiceController extends AppBaseController
             return redirect(route('revenueInvoices.index'));
         }
 
-        return view('revenue_invoices.edit')->with('revenueInvoice', $revenueInvoice);
+        return view('revenue_invoices.edit',compact('prjopt','useropt','depopt','divopt'))->with('revenueInvoice', $revenueInvoice);
     }
 
     /**
