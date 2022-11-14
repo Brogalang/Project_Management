@@ -26,7 +26,7 @@ class revenue_invoice extends Model
     use HasFactory;
 
     public $table = 'revenue_invoices';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -93,8 +93,8 @@ class revenue_invoice extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
-    
+
 }

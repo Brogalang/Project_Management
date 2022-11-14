@@ -37,7 +37,7 @@ class revenue_invoiceController extends AppBaseController
         $revenueInvoices = $this->revenueInvoiceRepository->all();
 
         $projectdb = DB::table('projects')
-                    ->join('revenue_invoices', 'revenue_invoices.id_project', '=', 'projects.project_id')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.id_project', '=', 'projects.project_id')
                     ->get();
         return view('revenue_invoices.index',compact('projectdb'))
             ->with('revenueInvoices', $revenueInvoices);
@@ -93,19 +93,19 @@ class revenue_invoiceController extends AppBaseController
             return redirect(route('revenueInvoices.index'));
         }
         $projectdb = DB::table('projects')
-                    ->join('revenue_invoices', 'revenue_invoices.id_project', '=', 'projects.project_id')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.id_project', '=', 'projects.project_id')
                     ->get();
         $picdb = DB::table('tb_datapribadi')
-                    ->join('revenue_invoices', 'revenue_invoices.pic', '=', 'tb_datapribadi.NIK')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.pic', '=', 'tb_datapribadi.NIK')
                     ->get();
         $depdb = DB::table('tbldivmaster')
-                    ->join('revenue_invoices', 'revenue_invoices.kd_dep', '=', 'tbldivmaster.id')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.kd_dep', '=', 'tbldivmaster.id')
                     ->get();
         // echo"<pre>";
         // print_r($depdb);
         // die();
         $divdb = DB::table('tb_subdivisi')
-                    ->join('revenue_invoices', 'revenue_invoices.kd_div', '=', 'tb_subdivisi.id')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.kd_div', '=', 'tb_subdivisi.id')
                     ->get();
 
         return view('revenue_invoices.show',compact('projectdb','picdb','depdb','divdb'))->with('revenueInvoice', $revenueInvoice);
