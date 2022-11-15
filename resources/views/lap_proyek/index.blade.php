@@ -13,7 +13,7 @@
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
                              List Laporan Mingguan
-                             <a class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus"></i></a>
+                             <button class="btn btn-info btn-sm pull-right" id="addBtn"><i class="fa fa-plus"></i></button>
                          </div>
                          <div class="card-body">
                             <div>
@@ -46,7 +46,7 @@
             @csrf
             <div class="modal-content">
             <div class="modal-header">
-            <h4 class="modal-title">Add Data Divisi</h4>
+            <h4 class="modal-title">Add Data Laporan Mingguan</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -64,28 +64,28 @@
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Tanggal</label>
                 <div class="col-sm-3">
-                    <input type="date" name="tglprogres" class="form-control">
+                    <input type="date" name="tglprogres" id="tglprogres" class="form-control">
                 </div>
                 </div>
 
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Nama Progress</label>
                 <div class="col-sm-9">
-                    <input type="text" name="nmprogres" class="form-control" placeholder="Nama Progress">
+                    <input type="text" name="nmprogres" id="nmprogres" class="form-control" placeholder="Nama Progress">
                 </div>
                 </div>
 
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Status Progress</label>
                 <div class="col-sm-9">
-                    <input type="text" name="statprogres" class="form-control" placeholder="Status Progress">
+                    <input type="text" name="statprogres" id="statprogres" class="form-control" placeholder="Status Progress">
                 </div>
                 </div>
 
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Catatan</label>
                 <div class="col-sm-9">
-                    <input type="text" name="catatan" class="form-control" placeholder="Catatan">
+                    <input type="text" name="catatan" id="catatan" class="form-control" placeholder="Catatan">
                 </div>
                 </div>
 
@@ -100,6 +100,63 @@
             </form>
         </div>
     </div>
+
+    <!-- modal show data-->
+    <div class="modal fade" id="modal-show" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Data Laporan Mingguan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <!---->
+                <div class="col-md-6">
+                    <!-- Nomor Invoice Field -->
+                    <div class="form-group col-sm-15">
+                        <strong><label>Project</label></strong>
+                        <p id="prjshow"></p>
+                    </div>
+                    <div class="form-group col-sm-15">
+                        <strong><label>Client</label></strong>
+                        <p id="clientshow"></p>
+                    </div>
+                    <div class="form-group col-sm-15">
+                        <strong><label>Sales AM</label></strong>
+                        <p id="salesamshow"></p>
+                    </div>
+                    <div class="form-group col-sm-15">
+                        <strong><label>Jenis Project</label></strong>
+                        <p id="jnsprojshow"></p>
+                    </div>
+
+                </div>
+
+                <!---->
+                <div class="col-md-6">
+                    <!-- PIC Id Field -->
+                    <div class="form-group col-sm-7">
+                        <strong><label>Tanggal Progress</label></strong>
+                        <p id="tglshow"></p>
+                    </div>
+                    <div class="form-group col-sm-7">
+                        <strong><label>List Progress</label></strong>
+                        <p id="listshow"></p>
+                    </div>
+                    <div class="form-group col-sm-7">
+                        <strong><label>Catatan</label></strong>
+                        <p id="catatanshow"></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-outline-info" data-dismiss="modal">Tutup</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('javascript')
@@ -120,7 +177,7 @@
             url : "/loaddata",
             datatype : "json",
             success:function(response){
-                console.log(response.listdata);
+                // console.log(response.listdata);
                 $('#display_data').html("");
                 var x = 0;
                 $.each(response.listdata,function(key,item){
@@ -133,9 +190,9 @@
                         <td align=left>'+item.nama_progress+' ['+item.status_progress+']</td>\
                         <td align=left>'+item.catatan_progress+'</td>\
                         <td align=center nowrap>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success"><i class="fa fa-eye" id="showBtn"></i></button>\
-                            <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info"><i class="fa fa-edit" onClick="myFunction('+item.id_progress+','+item.project_id+','+item.nama_progress+')"></i></button>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger"><i class="fa fa-trash" id="deleteBtn"></i></button>\
+                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success"><i class="fa fa-eye" onClick="show('+item.id_progress+')"></i></button>\
+                            <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info"><i class="fa fa-edit" onClick="edit('+item.id_progress+')"></i></button>\
+                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger"><i class="fa fa-trash" onClick="deletedata('+item.id_progress+')"></i></button>\
                         </td>\
                     </tr>'
                     );
@@ -150,8 +207,6 @@
         $(formdata).each(function(index, obj) {
             data[obj.name] = obj.value;
         });
-            // console.log(data);
-        // if (validation(data)) {
             $.ajax({
                 data: $('#modal-add form').serialize(),
                 url: "{{ route('laporan_mingguan.store') }}",
@@ -160,37 +215,94 @@
                 success: function(data) {
                     $('#modal-add').modal('hide');
                     loaddata();
-                    // $('.table').DataTable().draw();
                 },
                 error: function(data) {
                     console.log('Error:', data);
-                    // $('#saveBtn').html('Simpan');
                 }
             });
-        // }
     });
 
-    function myFunction(id_progres) {
+    function edit(id_progres) {
         $('#modal-add').modal('show');
         document.getElementById("metode").value="editdata";
         document.getElementById("id_progres").value=id_progres;
 
         $.ajax({
-            data: id_progres,
+            data: 'id_progres='+id_progres,
             url: "/edit_lap",
             type: "GET",
-            dataType: 'json',
-            success: function(data) {
-                // $('#modal-add').modal('hide');
-                // loaddata();
-                // $('.table').DataTable().draw();
+            datatype : "json",
+            success: function(response) {
+                // console.log(response.listdata);
+                $.each(response.listdata,function(key,item){
+                    document.getElementById("prjprogres").value=item.project_id;
+                    document.getElementById("tglprogres").value=item.tanggal_progress;
+                    document.getElementById("nmprogres").value=item.nama_progress;
+                    document.getElementById("statprogres").value=item.status_progress;
+                    document.getElementById("catatan").value=item.catatan_progress;
+                });
             },
-            error: function(data) {
-                console.log('Error:', data);
-                // $('#saveBtn').html('Simpan');
+            error: function(response) {
+                console.log('Error:', response);
             }
         });
     }
+    function show(id_progres) {
+        $('#modal-show').modal('show');
+        // document.getElementById("metode").value="editdata";
+        // document.getElementById("id_progres").value=id_progres;
+
+        $.ajax({
+            data: 'id_progres='+id_progres,
+            url: "/edit_lap",
+            type: "GET",
+            datatype : "json",
+            success: function(response) {
+                console.log(response.listdata);
+                $.each(response.listdata,function(key,item){
+                    document.getElementById("prjshow").innerHTML='<u><b>'+item.project_id+'</b></u> <br>'+item.project;
+                    document.getElementById("clientshow").innerHTML=item.client;
+                    document.getElementById("salesamshow").innerHTML=item.sales_am;
+                    document.getElementById("tglshow").innerHTML=item.tanggal_progress;
+                    document.getElementById("listshow").innerHTML=item.nama_progress+' <b>['+item.status_progress+']</b>';
+                    document.getElementById("catatanshow").innerHTML=item.catatan_progress;
+                    document.getElementById("jnsprojshow").innerHTML=item.jenis_project;
+                });
+            },
+            error: function(response) {
+                console.log('Error:', response);
+            }
+        });
+    }
+
+    function deletedata(id_progres) {
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                data: 'id_progres='+id_progres,
+                url: "/delete_lap",
+                type: "GET",
+                datatype : "json",
+                success: function(response) {
+                    console.log(response);
+                    loaddata();
+                },
+                error: function(response) {
+                    console.log('Error:', response);
+                }
+            });
+    }
+    }
+
+    $('#addBtn').click(function(e) {
+        document.getElementById("metode").value="insertdata";
+        document.getElementById("id_progres").value="";
+        document.getElementById("prjprogres").value="";
+        document.getElementById("tglprogres").value="";
+        document.getElementById("nmprogres").value="";
+        document.getElementById("statprogres").value="";
+        document.getElementById("catatan").value="";
+        $('#modal-add').modal('show');
+    });
 
     
 </script>
