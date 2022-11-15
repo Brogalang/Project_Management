@@ -53,4 +53,5 @@ Route::resource('revenuePayments', App\Http\Controllers\revenue_paymentControlle
 Route::resource('laporan_mingguan', App\Http\Controllers\lap_proyekController::class);
 Route::get('loaddata', [App\Http\Controllers\lap_proyekController::class, 'loaddata']);
 Route::get('edit_lap', [App\Http\Controllers\lap_proyekController::class, 'edit']);
+Route::get('delete_lap', [App\Http\Controllers\lap_proyekController::class, 'delete_lap']);
 
