@@ -171,7 +171,6 @@
     });
 
     function loaddata(){
-        // alert("Halo");
         $.ajax({
             type: "GET",
             url : "/master.project/public/loaddata",
