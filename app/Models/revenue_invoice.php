@@ -25,7 +25,7 @@ class revenue_invoice extends Model
 
     use HasFactory;
 
-    public $table = 'revenue_invoices';
+    public $table = 'revenue_invoices_realisasi';
 
 
     protected $dates = ['deleted_at'];
