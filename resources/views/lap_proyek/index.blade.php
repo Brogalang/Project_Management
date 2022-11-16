@@ -171,9 +171,10 @@
     });
 
     function loaddata(){
+        // alert('halo');
         $.ajax({
             type: "GET",
-            url : "/master.project/public/loaddata",
+            url : "{{ route('loaddata') }}",
             datatype : "json",
             success:function(response){
                 // console.log(response.listdata);
@@ -228,7 +229,7 @@
 
         $.ajax({
             data: 'id_progres='+id_progres,
-            url: "/edit_lap",
+            url: "{{ route('edit_lap') }}",
             type: "GET",
             datatype : "json",
             success: function(response) {
@@ -253,7 +254,7 @@
 
         $.ajax({
             data: 'id_progres='+id_progres,
-            url: "/edit_lap",
+            url: "{{ route('edit_lap') }}",
             type: "GET",
             datatype : "json",
             success: function(response) {
@@ -278,7 +279,7 @@
         if (confirm("Are you sure?")) {
             $.ajax({
                 data: 'id_progres='+id_progres,
-                url: "/delete_lap",
+                url: "{{ route('delete_lap') }}",
                 type: "GET",
                 datatype : "json",
                 success: function(response) {
