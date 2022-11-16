@@ -174,7 +174,7 @@
         // alert("Halo");
         $.ajax({
             type: "GET",
-            url : "/loaddata",
+            url : "/master.project/public/loaddata",
             datatype : "json",
             success:function(response){
                 // console.log(response.listdata);
