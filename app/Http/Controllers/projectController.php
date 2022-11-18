@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateprojectRequest;
 use App\Repositories\projectRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\project;
+use App\Models\JabatanModel;
 use Auth;
 use Illuminate\Http\Request;
 use Flash;
@@ -47,6 +48,18 @@ class projectController extends AppBaseController
         $projects = project::orderby('id', 'DESC')
                             ->where('sales_am', 'like' , "%".$auth."%")
                             ->get();
+
+        $userjab=Auth::user()->idjabatan;
+        $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
+        // $subdivisi=JabatanModel::where('id', '=', "226")->first();
+        // if ($subdivisi->id) {
+        //     echo"HALO";
+        // }
+        // $subdivisi=JabatanModel::where('id', '=', "30")->get();
+        // echo"<pre>";
+        // print_r($subdivisi->id);
+        // echo"</pre>";
+        // die();
 
         // return view('projects.index')
         //     ->with('projects', $projects);
