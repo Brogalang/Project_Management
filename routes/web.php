@@ -54,3 +54,5 @@ Route::resource('laporan_mingguan', App\Http\Controllers\lap_proyekController::c
 Route::get('/loaddata', [App\Http\Controllers\lap_proyekController::class, 'loaddata'])->name('loaddata');
 Route::get('/edit_lap', [App\Http\Controllers\lap_proyekController::class, 'edit_lap'])->name('edit_lap');
 Route::get('/delete_lap', [App\Http\Controllers\lap_proyekController::class, 'delete_lap'])->name('delete_lap');
+Route::get('/loadpending', [App\Http\Controllers\lap_proyekController::class, 'loadpending'])->name('loadpending');
+Route::get('/deletepending', [App\Http\Controllers\lap_proyekController::class, 'deletepending'])->name('deletepending');

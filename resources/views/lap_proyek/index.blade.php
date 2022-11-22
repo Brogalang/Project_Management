@@ -26,6 +26,7 @@
                                         <th style="text-align:center;">Progress</th>
                                         <th style="text-align:center;" nowrap>Minggu Ke</th>
                                         <th style="text-align:center;">Catatan</th>
+                                        <th style="text-align:center;">Pending</th>
                                         <th style="text-align:center;">Action</th>
                                     </tr>
                                     </thead>
@@ -47,11 +48,11 @@
             @csrf
             <div class="modal-content">
             <div class="modal-header">
-            <h4 class="modal-title">Add Data Laporan Mingguan</h4>
+            <h4 class="modal-title">Data Laporan Mingguan</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Project</label>
+                <label class="col-sm-3 col-form-label">Project <span class="text-danger" aria-hidden="true">&starf;</span></label>
                 <div class="col-sm-9">
                     <select name="prjprogres" id="prjprogres" class="form-control select2" style="width: 100%;">
                         <option value=''>Pilih Data</option>
@@ -167,6 +168,73 @@
         </div>
     </div>
 
+    <!-- modal Add Pending-->
+    <div class="modal fade" id="modal-pend" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form name="frm_pend" id="frm_pend" class="form-horizontal" action="javascript:void(0)" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add Pending Project</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Project <span class="text-danger" aria-hidden="true">&starf;</span></label>
+                <div class="col-sm-9">
+                    <select name="prjpending" id="prjpending" class="form-control" style="width: 100%;" readonly>
+                        <option value=''>Pilih Data</option>
+                        @foreach ($projects as $prj)
+                            <option value='{{$prj->project_id}}'>{{$prj->project_id}} [{{$prj->client}}] - {{$prj->project}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                </div>
+
+                <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Status <span class="text-danger" aria-hidden="true">&starf;</span></label>
+                <div class="col-sm-9">
+                    <select name="statpending" id="statpending" class="form-control" style="width: 40%;">
+                        <option value=''>Pilih Data</option>
+                        <option value='Pending'>Pending</option>
+                        <option value='Done'>Done</option>
+                    </select>
+                </div>
+                </div>
+
+                <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Deskripsi</label>
+                <div class="col-sm-9">
+                    <textarea type="text" name="despending" id="despending" class="form-control"></textarea>
+                </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <input type="hidden" name="metode" id="metodepending" value="insertpending">
+                <input type="hidden" name="id_pending" id="id_pending">
+                <button type="button" class="btn btn-outline-info" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary" id="savePending">Simpan</button>
+            </div>
+
+            <!--Tabel Loaddata Pending-->
+            <div>
+                <table class="table table-striped" id="lapproyek-table">
+                    <thead>
+                        <th style="text-align:center;">No</th>
+                        <th style="text-align:center;">Project</th>
+                        <th style="text-align:center;">Status</th>
+                        <th style="text-align:center;">Deskripsi</th>
+                        <th style="text-align:center;">Action</th>
+                    </thead>
+                    <tbody id="display_pending" name="display_pending">
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
 @endsection
 
 @push('javascript')
@@ -264,10 +332,13 @@
                         <td align=left>'+item.status_progress+'%</td>\
                         <td align=left>'+item.nama_progress+'</td>\
                         <td align=left>'+item.catatan_progress+'</td>\
+                        <td align=center>\
+                            <button type="submit" class="btn btn-success" onClick="pendingJ(\'' + item.project_id + '\')">Pending</button>\
+                        </td>\
                         <td align=center nowrap>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success"><i class="fa fa-eye" onClick="show('+item.id_progress+')"></i></button>\
-                            <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info"><i class="fa fa-edit" onClick="edit('+item.id_progress+')"></i></button>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger"><i class="fa fa-trash" onClick="deletedata('+item.id_progress+')"></i></button>\
+                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success" onClick="show('+item.id_progress+')"><i class="fa fa-eye"></i></button>\
+                            <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info" onClick="edit('+item.id_progress+')"><i class="fa fa-edit"></i></button>\
+                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger" onClick="deletedata('+item.id_progress+')"><i class="fa fa-trash"></i></button>\
                         </td>\
                     </tr>'
                     );
@@ -325,9 +396,6 @@
     }
     function show(id_progres) {
         $('#modal-show').modal('show');
-        // document.getElementById("metode").value="editdata";
-        // document.getElementById("id_progres").value=id_progres;
-
         $.ajax({
             data: 'id_progres='+id_progres,
             url: "{{ route('edit_lap') }}",
@@ -367,12 +435,105 @@
                     console.log('Error:', response);
                 }
             });
+        }
     }
+
+    function pendingJ(project_id){
+        $('#modal-pend').modal('show');
+        document.getElementById("prjpending").value=project_id;
+        clearpending();
+        loadpending(project_id);
+    }
+    function clearpending(){
+        document.getElementById("statpending").value="";
+        document.getElementById("despending").value="";
+    }
+
+    $('#savePending').click(function(e) {
+        var formdata = $("#modal-pend form").serializeArray();
+        var data = {};
+        $(formdata).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
+        var idload=data['prjpending'];
+        // console.log(idload);
+            $.ajax({
+                data: $('#modal-pend form').serialize(),
+                url: "{{ route('laporan_mingguan.store') }}",
+                type: "POST",
+                dataType: 'html',
+                success: function(data) {
+                    // $('#modal-pend').modal('hide');
+                    clearpending();
+                    loadpending(idload);
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+    });
+
+    function editpending(id_pending,status_pending,deskripsi_pending) {
+        document.getElementById("metodepending").value="editpending";
+        document.getElementById("id_pending").value=id_pending;
+        document.getElementById("statpending").value=status_pending;
+        document.getElementById("despending").value=deskripsi_pending;
+
+    }
+
+    function deletepending(id_pending,project_id) {
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                data: 'id_pending='+id_pending,
+                url: "{{ route('deletepending') }}",
+                type: "GET",
+                datatype : "json",
+                success: function(response) {
+                    console.log(response);
+                    loadpending(project_id);
+                },
+                error: function(response) {
+                    console.log('Error:', response);
+                }
+            });
+        }
+    }
+
+    function loadpending(project_id){
+        // alert('halo');
+        $.ajax({
+            data: 'project_id='+project_id,
+            type: "GET",
+            url : "{{ route('loadpending') }}",
+            datatype : "json",
+            success:function(response){
+                console.log(response.listpending);
+                $('#display_pending').html("");
+                var x = 0;
+                $.each(response.listpending,function(key,item){
+                    x++;
+                    $('#display_pending').append(
+                    '<tr>\
+                        <td align=center>'+x+'</td>\
+                        <td align=left>'+item.project_id+'</td>\
+                        <td align=center>'+item.status_pending+'</td>\
+                        <td align=left>'+item.deskripsi_pending+'</td>\
+                        <td align=center nowrap>\
+                            <button type="button" value="'+item.id_pending+'" class="btn btn-ghost-info" onClick="editpending(\''+item.id_pending+'\',\'' + item.status_pending + '\',\'' + item.deskripsi_pending + '\')"><i class="fa fa-edit"></i></button>\
+                            <button type="submit" value="'+item.id_pending+'" class="btn btn-ghost-danger" onClick="deletepending('+item.id_pending+',\'' + item.project_id + '\')"><i class="fa fa-trash"></i></button>\
+                        </td>\
+                    </tr>'
+                    );
+                });
+            }
+        });
     }
 
     $('#addBtn').click(function(e) {
         document.getElementById("metode").value="insertdata";
         document.getElementById("id_progres").value="";
+        document.getElementById("select2-prjprogres-container").title="Pilih Data";
+        document.getElementById("select2-prjprogres-container").innerHTML="Pilih Data";
         document.getElementById("prjprogres").value="";
         document.getElementById("tglprogres").value="";
         document.getElementById("nmprogres").value="";

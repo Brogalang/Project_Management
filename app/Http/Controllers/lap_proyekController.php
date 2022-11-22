@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\project;
 use App\Models\lap_proyek;
+use App\Models\Prj_Pending;
 use DB;
 
 class lap_proyekController extends Controller
@@ -29,13 +30,22 @@ class lap_proyekController extends Controller
             'listdata' => $listdata,
         ]);
     }
+    public function loadpending(Request $request){
+        $listpending = DB::table('projects_pending')
+                    ->join('projects', 'projects.project_id', '=', 'projects_pending.project_id')
+                    ->where('projects_pending.project_id', '=', $request->project_id)
+                    ->orderby('projects_pending.id_pending','asc')
+                    ->get();
+        return response()->json([
+            'listpending' => $listpending,
+        ]);
+    }
 
     public function store(Request $request)
     {
         if ($request->metode=='insertdata') {
             $request->validate([
                 'prjprogres' => 'required',
-                'nmprogres' => 'required',
             ]);
             lap_proyek::insert([
                 'project_id' => $request->prjprogres,
@@ -50,7 +60,6 @@ class lap_proyekController extends Controller
         }else if ($request->metode=='editdata') {
             $request->validate([
                 'prjprogres' => 'required',
-                'nmprogres' => 'required',
             ]);
             lap_proyek::where('id_progress', '=', $request->id_progres)->update([
                 'project_id' => $request->prjprogres,
@@ -61,6 +70,30 @@ class lap_proyekController extends Controller
                 'updated_at' => date('Y-m-d h:i:s')
             ]);
             return response()->json(['success' => 'Data updated successfully.']);
+        }else if($request->metode=='insertpending'){
+            $request->validate([
+                'prjpending' => 'required',
+                'statpending' => 'required',
+            ]);
+            Prj_Pending::insert([
+                'project_id' => $request->prjpending,
+                'status_pending' => $request->statpending,
+                'deskripsi_pending' => $request->despending,
+                'updated_at' => date('Y-m-d h:i:s'),
+                'created_at' => date('Y-m-d h:i:s')
+                ]);
+            return response()->json(['successw' => 'Data saved successfully.']);
+        }else if($request->metode=='editpending'){
+            $request->validate([
+                'prjpending' => 'required',
+            ]);
+            Prj_Pending::where('id_pending', '=', $request->id_pending)->update([
+                'project_id' => $request->prjpending,
+                'status_pending' => $request->statpending,
+                'deskripsi_pending' => $request->despending,
+                'updated_at' => date('Y-m-d h:i:s')
+            ]);
+            return response()->json(['successw' => 'Data saved successfully.']);
         }
     }
 
@@ -77,6 +110,11 @@ class lap_proyekController extends Controller
     public function delete_lap(Request $request)
     {
         lap_proyek::where('id_progress', '=', $request->id_progres)->delete();
+        return response()->json(['success' => 'Data deleted successfully.']);
+    }
+    public function deletepending(Request $request)
+    {
+        Prj_Pending::where('id_pending', '=', $request->id_pending)->delete();
         return response()->json(['success' => 'Data deleted successfully.']);
     }
 
