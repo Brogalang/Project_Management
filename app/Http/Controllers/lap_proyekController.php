@@ -21,9 +21,10 @@ class lap_proyekController extends Controller
         }
     }
 
-    public function loaddata(){
+    public function loaddata(Request $request){
         $listdata = DB::table('projects_status')
                     ->join('projects', 'projects.project_id', '=', 'projects_status.project_id')
+                    ->where('projects_status.project_id', '=', $request->project_id)
                     ->orderby('projects_status.id_progress','asc')
                     ->get();
         return response()->json([

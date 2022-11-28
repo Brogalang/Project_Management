@@ -19,6 +19,13 @@
 <li class="nav-item nav-dropdown ">
     <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-tasks text-info"></i><span class="menu-title">Project Management</span></a>
     <ul class="nav-dropdown-items">
+        <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('projects.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Project</span>
+            </a>
+        </li>
+
         <li class="nav-item {{ Request::is('purchaseOrders*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('purchaseOrders.index') }}">
                 <i class="nav-icon fa fa-empty text-secondary"></i>

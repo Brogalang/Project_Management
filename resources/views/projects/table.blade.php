@@ -1,27 +1,3 @@
-<div class="form-group">
-    <form action="{{ route('search') }}" method="GET" class="form-horizontal">
-        <table >
-            <tr>
-                <td>Kode Project</td>
-                <td>:</td>
-                <td><input type="text" id="prjfind" name="prjfind" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>Sales AM</td>
-                <td>:</td>
-                <td><input type="text" id="amfind" name="amfind" class="form-control"</td>
-            </tr>
-            <tr>
-                <td colspan=2></td>
-                <td>
-                    <button class='btn btn-info'>Cari</button>
-                    <a class='btn btn-secondary' href="{{ route('projects.index') }}">Cancel</a>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-
 <div class="table-responsive-sm">
     <table class="table table-striped" id="projects-table">
         <thead>
@@ -32,6 +8,7 @@
                 <th>Client</th>
                 <th>Kontrak</th>
                 <th>Status</th>
+                <th nowrap>Add Form</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -75,6 +52,18 @@
                     @endif
                 </td>
                 <td>
+                    <button class="btn btn-success" data-toggle="dropdown" href="#" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                        Add
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item" href="#">Task List</button>
+                        <button class="dropdown-item" href="#">Delivery</button>
+                        <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
+                        <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
+                    </div>
+                </td>
+                <td>
                     {!! Form::open(['route' => ['projects.destroy', $project->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('projects.show', [$project->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a>
@@ -88,9 +77,5 @@
         </tbody>
     </table>
 </div>
+@include('projects.modal')
 
-@push('javascript')
-<script>
-   
-</script>
-@endpush
