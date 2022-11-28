@@ -12,6 +12,7 @@ use App\Models\purchase_order;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class invoicesController extends AppBaseController
 {
@@ -37,7 +38,6 @@ class invoicesController extends AppBaseController
             ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
             ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
             ->get();
-
         return view('invoices.index')
             ->with('invoices', $invoices);
     }
@@ -52,6 +52,13 @@ class invoicesController extends AppBaseController
         $projects = project::get();
         $nomor_po = purchase_order::get();
         return view('invoices.create')->with('projects', $projects)->with('nomor_po', $nomor_po)->with('invoices', null);
+    }
+    public function tambah($id)
+    {
+        $projects = project::get();
+        $modal = project::find($id);
+        $nomor_po = purchase_order::get();
+        return view('invoices.create')->with('projects', $projects)->with('nomor_po', $nomor_po)->with('invoices', null)->with('modal', $modal);
     }
 
     /**

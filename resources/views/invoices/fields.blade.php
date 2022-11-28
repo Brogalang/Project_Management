@@ -5,9 +5,12 @@
             <strong>{!! Form::label('project_id', 'Project:') !!}</strong>
             <select name="project_id" id="project_id" class="form-control form-select">
                 <option value=""></option>
+
                 @foreach ($projects as $project)
                     @if ($invoices)
                         <option value="{{$project->id}}" {{ ($project->id == $invoices->project_id) ? 'selected' : '' }}>{{ $project->project_id . ' - ' . $project->project }}</option>
+                    @elseif($modal)
+                        <option value="{{$project->id}}" {{ ($project->id == $modal->id) ? 'selected' : '' }}>{{ $project->project_id . ' - ' . $project->project }}</option>
                     @else
                         <option value="{{$project->id}}">{{ $project->project_id . ' - ' . $project->project }}</option>
                     @endif

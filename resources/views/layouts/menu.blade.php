@@ -26,7 +26,7 @@
             </a>
         </li>
 
-        <li class="nav-item {{ Request::is('purchaseOrders*') ? 'active' : '' }}">
+        <!-- <li class="nav-item {{ Request::is('purchaseOrders*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('purchaseOrders.index') }}">
                 <i class="nav-icon fa fa-empty text-secondary"></i>
                 <span>Task List</span>
@@ -45,7 +45,7 @@
                 <i class="nav-icon fa fa-empty text-secondary"></i>
                 <span>Laporan Mingguan</span>
             </a>
-        </li>
+        </li> -->
     </ul>
 </li>
 <li class="nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">

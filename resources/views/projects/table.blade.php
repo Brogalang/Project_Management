@@ -57,8 +57,9 @@
                         Add
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" href="#">Task List</button>
-                        <button class="dropdown-item" href="#">Delivery</button>
+                        <button class="dropdown-item" onclick="tasklist('{{$project->project_id}}')">Task List</button>
+                        <!-- <a class="dropdown-item" onclick="delivery('{{$project->project_id}}')">Delivery</a> -->
+                        <a class="dropdown-item" href="{{ route('tambah', [$project->id]) }}">Delivery</a>
                         <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
                         <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
                     </div>
