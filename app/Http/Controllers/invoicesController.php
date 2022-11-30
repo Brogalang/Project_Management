@@ -33,13 +33,22 @@ class invoicesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // $invoices = $this->invoicesRepository->all();
-        $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
-            ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
-            ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
-            ->get();
-        return view('invoices.index')
-            ->with('invoices', $invoices);
+        if ($request->project_idShow) {
+            $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
+                ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
+                ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
+                ->where('projects.project_id', '=', $request->project_idShow)
+                ->get();
+        }else{
+            $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
+                ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
+                ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
+                ->get();
+        }
+
+        $html= view('invoices.index')
+        ->with('invoices', $invoices);
+        return $html;
     }
 
     /**
