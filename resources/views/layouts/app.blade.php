@@ -46,6 +46,8 @@
         <link rel="stylesheet" href="{{asset('select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+        
     </head>
     <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     <header class="app-header navbar">

@@ -12,6 +12,7 @@ use App\Models\purchase_order;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class invoicesController extends AppBaseController
 {
@@ -32,14 +33,22 @@ class invoicesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // $invoices = $this->invoicesRepository->all();
-        $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
-            ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
-            ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
-            ->get();
+        if ($request->project_idShow) {
+            $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
+                ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
+                ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
+                ->where('projects.project_id', '=', $request->project_idShow)
+                ->get();
+        }else{
+            $invoices = invoices::select('invoices.*', 'projects.project_id as proid', 'projects.project', 'purchase_orders.nomor_po as po_number', 'purchase_orders.tanggal_po')
+                ->leftjoin('projects', 'invoices.project_id', '=', 'projects.id')
+                ->leftjoin('purchase_orders', 'invoices.nomor_po', '=', 'purchase_orders.id')
+                ->get();
+        }
 
-        return view('invoices.index')
-            ->with('invoices', $invoices);
+        $html= view('invoices.index')
+        ->with('invoices', $invoices);
+        return $html;
     }
 
     /**
@@ -52,6 +61,13 @@ class invoicesController extends AppBaseController
         $projects = project::get();
         $nomor_po = purchase_order::get();
         return view('invoices.create')->with('projects', $projects)->with('nomor_po', $nomor_po)->with('invoices', null);
+    }
+    public function tambah($id)
+    {
+        $projects = project::get();
+        $modal = project::find($id);
+        $nomor_po = purchase_order::get();
+        return view('invoices.create')->with('projects', $projects)->with('nomor_po', $nomor_po)->with('invoices', null)->with('modal', $modal);
     }
 
     /**

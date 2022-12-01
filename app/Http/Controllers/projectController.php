@@ -8,6 +8,7 @@ use App\Repositories\projectRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\project;
 use App\Models\JabatanModel;
+use App\Models\purchase_order;
 use Auth;
 use Illuminate\Http\Request;
 use Flash;
@@ -48,7 +49,7 @@ class projectController extends AppBaseController
         $projects = project::orderby('id', 'DESC')
                             ->where('sales_am', 'like' , "%".$auth."%")
                             ->get();
-
+        $nomor_po = purchase_order::get();
         $userjab=Auth::user()->idjabatan;
         $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
         // $subdivisi=JabatanModel::where('id', '=', "226")->first();
@@ -64,7 +65,7 @@ class projectController extends AppBaseController
         // return view('projects.index')
         //     ->with('projects', $projects);
 
-        return view('projects.index',compact('projects'))
+        return view('projects.index',compact('projects','nomor_po'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
             
         // return view('form.kary',compact('data','menus','jab','dep'))

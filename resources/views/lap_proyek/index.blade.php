@@ -306,10 +306,6 @@
             }
         });
         loaddata();
-
-        // $("#prjprogres").select2({
-        //         theme: 'bootstrap4'
-        // });
     });
 
     function loaddata(){
@@ -319,29 +315,31 @@
             url : "{{ route('loaddata') }}",
             datatype : "json",
             success:function(response){
-                // console.log(response.listdata);
+                // console.log(response.countdata);
                 $('#display_data').html("");
                 var x = 0;
                 $.each(response.listdata,function(key,item){
                     x++;
-                    $('#display_data').append(
-                    '<tr>\
-                        <td align=center>'+x+'</td>\
-                        <td align=left><b><u>'+item.project_id+'</u></b><br>'+item.project+'</td>\
-                        <td align=center nowrap>'+item.tanggal_progress+'</td>\
-                        <td align=left>'+item.status_progress+'%</td>\
-                        <td align=left>'+item.nama_progress+'</td>\
-                        <td align=left>'+item.catatan_progress+'</td>\
-                        <td align=center>\
-                            <button type="submit" class="btn btn-success" onClick="pendingJ(\'' + item.project_id + '\')">Pending</button>\
-                        </td>\
-                        <td align=center nowrap>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success" onClick="show('+item.id_progress+')"><i class="fa fa-eye"></i></button>\
-                            <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info" onClick="edit('+item.id_progress+')"><i class="fa fa-edit"></i></button>\
-                            <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger" onClick="deletedata('+item.id_progress+')"><i class="fa fa-trash"></i></button>\
-                        </td>\
-                    </tr>'
-                    );
+                    // $.each(response.countdata,function(key,count){
+                        $('#display_data').append(
+                        '<tr>\
+                            <td align=center>'+x+'</td>\
+                            <td align=left><b><u>'+item.project_id+'</u></b><br>'+item.project+'</td>\
+                            <td align=center nowrap>'+item.tanggal_progress+'</td>\
+                            <td align=left>'+item.status_progress+'%</td>\
+                            <td align=left>'+item.nama_progress+'</td>\
+                            <td align=left>'+item.catatan_progress+'</td>\
+                            <td align=center>\
+                                <button type="submit" class="btn btn-success" onClick="pendingJ(\'' + item.project_id + '\')">Pending</button>\
+                            </td>\
+                            <td align=center nowrap>\
+                                <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-success" onClick="show('+item.id_progress+')"><i class="fa fa-eye"></i></button>\
+                                <button type="button" value="'+item.id_progress+'" class="btn btn-ghost-info" onClick="edit('+item.id_progress+')"><i class="fa fa-edit"></i></button>\
+                                <button type="submit" value="'+item.id_progress+'" class="btn btn-ghost-danger" onClick="deletedata('+item.id_progress+')"><i class="fa fa-trash"></i></button>\
+                            </td>\
+                        </tr>'
+                        );
+                    // });
                 });
             }
         });
@@ -369,6 +367,7 @@
     });
 
     function edit(id_progres) {
+        $('#modal-add').modal({backdrop: 'static', keyboard: false});
         $('#modal-add').modal('show');
         document.getElementById("metode").value="editdata";
         document.getElementById("id_progres").value=id_progres;
@@ -395,6 +394,7 @@
         });
     }
     function show(id_progres) {
+        $('#modal-show').modal({backdrop: 'static', keyboard: false});
         $('#modal-show').modal('show');
         $.ajax({
             data: 'id_progres='+id_progres,
@@ -439,6 +439,7 @@
     }
 
     function pendingJ(project_id){
+        $('#modal-pend').modal({backdrop: 'static', keyboard: false});
         $('#modal-pend').modal('show');
         document.getElementById("prjpending").value=project_id;
         clearpending();
@@ -466,6 +467,7 @@
                     // $('#modal-pend').modal('hide');
                     clearpending();
                     loadpending(idload);
+                    loaddata();
                 },
                 error: function(data) {
                     console.log('Error:', data);
@@ -478,7 +480,6 @@
         document.getElementById("id_pending").value=id_pending;
         document.getElementById("statpending").value=status_pending;
         document.getElementById("despending").value=deskripsi_pending;
-
     }
 
     function deletepending(id_pending,project_id) {
@@ -491,6 +492,7 @@
                 success: function(response) {
                     console.log(response);
                     loadpending(project_id);
+                    loaddata();
                 },
                 error: function(response) {
                     console.log('Error:', response);
@@ -539,6 +541,7 @@
         document.getElementById("nmprogres").value="";
         document.getElementById("statprogres").value="";
         document.getElementById("catatan").value="";
+        $('#modal-add').modal({backdrop: 'static', keyboard: false});
         $('#modal-add').modal('show');
     });
 

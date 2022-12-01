@@ -33,7 +33,13 @@ class RABController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $rABS = $this->rABRepository->all();
+        // $rABS = $this->rABRepository->all();
+        if ($request->id_show) {
+            $rABS = RAB::where('project_rec_id', '=', $request->id_show)
+                ->get();
+        }else {
+            $rABS = $this->rABRepository->all();
+        }
 
         return view('r_a_b_s.index')
             ->with('rABS', $rABS);
