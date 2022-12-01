@@ -8,7 +8,7 @@
                 <th>Client</th>
                 <th>Kontrak</th>
                 <th>Status</th>
-                <th nowrap>Add Form</th>
+                <th nowrap>Add Detail</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -51,15 +51,30 @@
                         <h6><span class="badge badge-danger">{{ $project->status }}</span></h6>
                     @endif
                 </td>
-                <td>
+                <td style="text-align:center;">
                     <button class="btn btn-success" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
                         Add
                     </button>
+                    
                     <div class="dropdown-menu dropdown-menu-right">
+                        <div>
+                            <table border="1">
+                                <form action="{{ route('invoices.index') }}" method="GET" class="form-horizontal">
+                                    <input type="hidden" name="project_idShow" id="project_idShow" value="{{$project->project_id}}">
+                                    <button class="dropdown-item">Delivery</button>
+                                </form>
+                            </table>
+                        </div>
+                        <div>
+                            <table border="1">
+                                <form action="{{ route('rABS.index') }}" method="GET" class="form-horizontal">
+                                    <input type="hidden" name="id_show" id="id_show" value="{{$project->id}}">
+                                    <button class="dropdown-item">RAB</button>
+                                </form>
+                            </table>
+                        </div>
                         <button class="dropdown-item" onclick="tasklist('{{$project->project_id}}')">Task List</button>
-                        <!-- <a class="dropdown-item" onclick="delivery('{{$project->project_id}}')">Delivery</a> -->
-                        <a class="dropdown-item" href="{{ route('tambah', [$project->id]) }}">Delivery</a>
                         <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
                         <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
                     </div>

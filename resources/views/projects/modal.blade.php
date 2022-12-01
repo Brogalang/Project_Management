@@ -238,104 +238,6 @@
     </div>
 </div>
 
-<!-- modal Add Delivery-->
-<div class="modal fade" id="modal-delivery" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <form name="frm_delivery" id="frm_delivery" class="form-horizontal" action="javascript:void(0)" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">Add Delivery</h4>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-            <!---->
-            <div class="col-md-6">
-                <!-- Nomor Invoice Field -->
-                <div class="form-group col-sm-15">
-                    <label class="col-form-label">Project</label>
-                    <!-- <div class="col-sm-9"> -->
-                        <select name="prjdelivery" id="prjdelivery" class="form-control" style="width: 100%;" readonly>
-                            <option value=''>Pilih Data</option>
-                            @foreach ($projects as $prj)
-                                <option value='{{$prj->project_id}}'>{{$prj->project_id}} [{{$prj->client}}] - {{$prj->project}}</option>
-                            @endforeach
-                        </select>
-                    <!-- </div> -->
-                </div>
-                <div class="form-group col-sm-15">
-                    <label class="col-form-label">Nama Pelanggan</label>
-                    <input type="text" name="namapelanggan" id="namapelanggan" class="form-control" placeholder="Nama Pelanggan">
-                </div>
-                <div class="form-group col-sm-15">
-                    <label>Sales AM</label>
-                    <p id="salesamshow"></p>
-                </div>
-                <div class="form-group col-sm-15">
-                    <label>Jenis Project</label>
-                    <p id="jnsprojshow"></p>
-                </div>
-
-            </div>
-
-            <!---->
-            <div class="col-md-6">
-                <!-- PIC Id Field -->
-                <div class="form-group col-sm-15">
-                <label class="col-form-label">Nomor PO</label>
-                    <!-- <div class="col-sm-9"> -->
-                        <select name="nomorpo" id="nomorpo" class="form-control" style="width: 100%;">
-                            <option value=''>Pilih Data</option>
-                        </select>
-                    <!-- </div> -->
-                </div>
-                <div class="form-group col-sm-7">
-                    <label>Progress</label>
-                    <p id="listshow"></p>
-                </div>
-                <div class="form-group col-sm-7">
-                    <label>Minggu Ke</label>
-                    <p id="mingguke"></p>
-                </div>
-                <div class="form-group col-sm-7">
-                    <label>Catatan</label>
-                    <p id="catatanshow"></p>
-                </div>
-            </div>
-
-
-        </div>
-        
-        <div class="modal-footer">
-            <input type="hidden" name="metode" id="metodetask" value="inserttask">
-            <input type="hidden" name="id_task" id="id_task">
-            <button type="button" class="btn btn-outline-info" data-dismiss="modal">Tutup</button>
-            <button type="button" class="btn btn-outline-danger" onclick="cleartask()">Cancel</button>
-            <button type="submit" class="btn btn-primary" id="saveTask">Simpan</button>
-        </div>
-
-        <!--Tabel Loaddata Task List-->
-        <div>
-            <table class="table table-striped" id="tasklist-table">
-                <thead>
-                    <th style="text-align:center;">No</th>
-                    <th style="text-align:center;">Project</th>
-                    <th style="text-align:center;">Urutan Task</th>
-                    <th style="text-align:center;">Nama Task List</th>
-                    <th style="text-align:center;">Tanggal</th>
-                    <th style="text-align:center;">Progress</th>
-                    <th style="text-align:center;">Action</th>
-                </thead>
-                <tbody id="display_task" name="display_task">
-                </tbody>
-            </table>
-        </div>
-        </div>
-        </form>
-    </div>
-</div>
-
-
 @push('javascript')
 <script>
     $(document).ready(function(){   
@@ -551,9 +453,13 @@
     }
 
     // function delivery(project_id){
-    //     $('#modal-delivery').modal({backdrop: 'static', keyboard: false});
-    //     $('#modal-delivery').modal('show');
-    //     document.getElementById("prjdelivery").value=project_id;
+    //     $.ajax({
+    //         data: 'project_id='+project_id,
+    //         url: "{{ route('invoices.index') }}",
+    //         datatype : "json",
+    //         success: function(response) {
+    //         },
+    //     });
     //     // cleartask();
     //     // loadtask(project_id);
     // }
