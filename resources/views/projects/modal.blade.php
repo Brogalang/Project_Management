@@ -11,11 +11,12 @@
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Project <span class="text-danger" aria-hidden="true">&starf;</span></label>
             <div class="col-sm-9">
-                <select name="prjprogres" id="prjprogres" class="form-control" style="width: 100%;" readonly>
+                <select name="prjprogresopt" id="prjprogresopt" class="form-control" style="width: 100%;" disabled="disabled">
                     @foreach ($projects as $prj)
                         <option value='{{$prj->project_id}}'>{{$prj->project_id}} [{{$prj->client}}] - {{$prj->project}}</option>
                     @endforeach
                 </select>
+                <input type="text" id="prjprogres" name="prjprogres" hidden>
             </div>
             </div>
 
@@ -94,12 +95,13 @@
             <div class="form-group row">
             <label class="col-sm-2 col-form-label">Project <span class="text-danger" aria-hidden="true">&starf;</span></label>
             <div class="col-sm-9">
-                <select name="prjpending" id="prjpending" class="form-control" style="width: 100%;" readonly>
+                <select name="prjpendingopt" id="prjpendingopt" class="form-control" style="width: 100%;" disabled>
                     <option value=''>Pilih Data</option>
                     @foreach ($projects as $prj)
                         <option value='{{$prj->project_id}}'>{{$prj->project_id}} [{{$prj->client}}] - {{$prj->project}}</option>
                     @endforeach
                 </select>
+                <input type="text" id="prjpending" name="prjpending" hidden>
             </div>
             </div>
 
@@ -162,12 +164,13 @@
             <div class="form-group row">
             <label class="col-sm-2 col-form-label">Project <span class="text-danger" aria-hidden="true">&starf;</span></label>
             <div class="col-sm-9">
-                <select name="prjtask" id="prjtask" class="form-control" style="width: 100%;" readonly>
+                <select name="prjtaskopt" id="prjtaskopt" class="form-control" style="width: 100%;" disabled>
                     <option value=''>Pilih Data</option>
                     @foreach ($projects as $prj)
                         <option value='{{$prj->project_id}}'>{{$prj->project_id}} [{{$prj->client}}] - {{$prj->project}}</option>
                     @endforeach
                 </select>
+                <input type="text" id="prjtask" name="prjtask" hidden>
             </div>
             </div>
 
@@ -260,6 +263,7 @@
    function lapmingguan(project_id){
         $('#modal-add').modal({backdrop: 'static', keyboard: false});
         $('#modal-add').modal('show');
+        document.getElementById("prjprogresopt").value=project_id;
         document.getElementById("prjprogres").value=project_id;
         clearlap();
         loaddatalap(project_id);
@@ -352,6 +356,7 @@
     function tasklist(project_id){
         $('#modal-task').modal({backdrop: 'static', keyboard: false});
         $('#modal-task').modal('show');
+        document.getElementById("prjtaskopt").value=project_id;
         document.getElementById("prjtask").value=project_id;
         cleartask();
         loadtask(project_id);
@@ -436,7 +441,7 @@
                     $('#display_task').append(
                     '<tr>\
                         <td align=center>'+x+'</td>\
-                        <td align=left>'+item.project_id+'</td>\
+                        <td align=left><b><u>'+item.project_id+'</u></b><br>'+item.project+'</td>\
                         <td align=center>'+item.urutan_task+'</td>\
                         <td align=left>'+item.nama_task+'</td>\
                         <td align=left>'+item.tgldari_task+' s/d <br>'+item.tglsmp_task+'</td>\
@@ -467,6 +472,7 @@
     function pendingJ(project_id){
         $('#modal-pend').modal({backdrop: 'static', keyboard: false});
         $('#modal-pend').modal('show');
+        document.getElementById("prjpendingopt").value=project_id;
         document.getElementById("prjpending").value=project_id;
         clearpending();
         loadpending(project_id);
@@ -545,7 +551,7 @@
                     $('#display_pending').append(
                     '<tr>\
                         <td align=center>'+x+'</td>\
-                        <td align=left>'+item.project_id+'</td>\
+                        <td align=left><b><u>'+item.project_id+'</u></b><br>'+item.project+'</td>\
                         <td align=center>'+item.status_pending+'</td>\
                         <td align=left>'+item.deskripsi_pending+'</td>\
                         <td align=center nowrap>\
