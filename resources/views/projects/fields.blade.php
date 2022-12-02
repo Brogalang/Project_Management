@@ -16,6 +16,14 @@
         </div>
     </div>
     <div class="col-md-4">
+        <!-- Departement Field -->
+        <div class="form-group col-sm-6">
+            <strong>{!! Form::label('jabatan', 'Jabatan') !!}</strong>
+            <h5>{!! Form::label('jabatan', Auth::user()->jabatanUser->jabatan) !!}</h5>
+            {!! Form::text('jabatan', Auth::user()->jabatanUser->jabatan, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
+        </div>
+    </div>
+    <div class="col-md-4">
         <!-- Sales Am Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('sales_am', 'Sales AM') !!}</strong>
@@ -39,6 +47,12 @@
             {!! Form::text('project', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
+        <!-- Client Fullname Field -->
+        <div class="form-group col-sm-12 col-lg-12"">
+            <strong>{!! Form::label('client_fullname', 'Nama Lengkap Client') !!}</strong>
+            {!! Form::textarea('client_fullname', null, ['class' => 'form-control', 'cols' => 3, 'rows' => 3]) !!}
+        </div>
+
         <!-- Project Fullname Field -->
         <div class="form-group col-sm-12 col-lg-12">
             <strong>{!! Form::label('project_fullname', 'Nama Lengkap Proyek') !!}</strong>
@@ -59,6 +73,10 @@
                 <div class="form-group col-sm-12">
                     <strong>{!! Form::label('kontrak_no', 'Nomor Kontrak') !!}</strong>
                     {!! Form::text('kontrak_no', null, ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group col-sm-12">
+                    <strong>{!! Form::label('local_project_id', 'Id Project Local') !!}</strong>
+                    {!! Form::text('local_project_id', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
 

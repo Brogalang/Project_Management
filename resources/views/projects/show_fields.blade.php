@@ -33,8 +33,18 @@
     <div class="col-md-6">
         <!-- Client Field -->
         <div class="form-group col-sm-12">
+            <strong>{!! Form::label('local_project_id', 'Id Project Local:') !!}</strong>
+            <h5>{!! $project->local_project_id !!}</h5>
+        </div>
+         <!-- Client Field -->
+        <div class="form-group col-sm-12">
             <strong>{!! Form::label('client', 'Client:') !!}</strong>
             <h5>{!! $project->client !!}</h5>
+        </div>
+         <!-- Client Fullname Field -->
+        <div class="form-group col-sm-12 col-lg-12">
+            <strong>{!! Form::label('client_fullname', 'Nama Lengkap Client:') !!}</strong>
+            <h5>{!! $project->client_fullname !!}</h5>
         </div>
 
         <!-- Project Field -->
@@ -94,14 +104,14 @@
                 <!-- Nilai Kontrak Bt Field -->
                 <div class="form-group col-sm-12">
                     <strong>{!! Form::label('nilai_kontrak_BT', 'Nilai Kontrak Sebelum Pajak:') !!}</strong>
-                    <h5>{!! $project->nilai_kontrak_BT !!}</h5>
+                    <h5>{!! number_format($project->nilai_kontrak_BT) !!}</h5>
                 </div>
             </div>
             <div class="col-md-6">
                 <!-- Nilai Kontrak At Field -->
                 <div class="form-group col-sm-12">
                     <strong>{!! Form::label('nilai_kontrak_AT', 'Nilai Kontrak Setelah Pajak:') !!}</strong>
-                    <h5>{!! $project->nilai_kontrak_AT !!}</h5>
+                    <h5>{!! number_format($project->nilai_kontrak_AT) !!}</h5>
                 </div>
             </div>
             <div class="col-md-6">

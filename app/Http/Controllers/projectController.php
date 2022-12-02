@@ -32,7 +32,8 @@ class projectController extends AppBaseController
         $projects = project::where('project_id', 'like', "%" . $keyword . "%")
                             ->where('sales_am', 'like', "%" . $salesam . "%")
                             ->orderby('id','DESC')->get();
-        return view('projects.index', compact('projects'))
+        
+        return view('projects.index', compact('projects','keyword','salesam'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -50,22 +51,26 @@ class projectController extends AppBaseController
                             ->where('sales_am', 'like' , "%".$auth."%")
                             ->get();
         $nomor_po = purchase_order::get();
-        $userjab=Auth::user()->idjabatan;
-        $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
-        // $subdivisi=JabatanModel::where('id', '=', "226")->first();
-        // if ($subdivisi->id) {
-        //     echo"HALO";
+        // $userjab=Auth::user()->idjabatan;
+        // $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
+        // if (strpos($subdivisi->jabatan, "Account Manager") >=0) {
+
         // }
-        // $subdivisi=JabatanModel::where('id', '=', "30")->get();
+        // $coba=strpos($subdivisi->jabatan, "Account Manager");
+
         // echo"<pre>";
-        // print_r($subdivisi->id);
+        // print_r($coba);
+        // echo"<pre>";
+        // print_r($subdivisi->jabatan);
         // echo"</pre>";
         // die();
 
         // return view('projects.index')
         //     ->with('projects', $projects);
-
-        return view('projects.index',compact('projects','nomor_po'))
+        // strpos(strtolower($table_data), "where");
+        $keyword=null;
+        $salesam=null;
+        return view('projects.index',compact('projects','nomor_po','keyword','salesam'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
             
         // return view('form.kary',compact('data','menus','jab','dep'))

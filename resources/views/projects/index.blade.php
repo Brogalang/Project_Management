@@ -15,11 +15,11 @@
         <div id="accordion">
         <div class="card">
             <div class="card-header">
-                <a class="card-link" data-toggle="collapse" href="#menuone" aria-expanded="false" aria-controls="menuone">
+                <button class="btn btn-ghost-primary" data-toggle="collapse" href="#menuone" aria-expanded="false" aria-controls="menuone">
                     <span class="collapsed"><i class="fa fa-plus"></i></span> 
                     <span class="expanded"><i class="fa fa-minus"></i></span> 
                     Search
-                </a>
+                </button>
             </div>
             <div id="menuone" class="collapse">
             <div class="card-body">
@@ -28,12 +28,12 @@
                     <tr>
                         <td>Kode Project</td>
                         <td>:</td>
-                        <td><input type="text" id="prjfind" name="prjfind" class="form-control"></td>
+                        <td><input type="text" id="prjfind" name="prjfind" class="form-control" value="{{$keyword}}"></td>
                     </tr>
                     <tr>
                         <td>Sales AM</td>
                         <td>:</td>
-                        <td><input type="text" id="amfind" name="amfind" class="form-control"</td>
+                        <td><input type="text" id="amfind" name="amfind" class="form-control" value="{{$salesam}}"></td>
                     </tr>
                     <tr>
                         <td colspan=2></td>
