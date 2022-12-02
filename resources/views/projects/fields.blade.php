@@ -12,11 +12,11 @@
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('departement', 'Departemen') !!}</strong>
             <h5>{!! Form::label('departement', Auth::user()->sub_divisi->subdivisi) !!}</h5>
-            {!! Form::text('departement', Auth::user()->sub_divisi->subdivisi, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
+            {!! Form::text('departement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control']) !!}
         </div>
     </div>
     <div class="col-md-4">
-        <!-- Departement Field -->
+        <!-- Jabatan Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('jabatan', 'Jabatan') !!}</strong>
             <h5>{!! Form::label('jabatan', Auth::user()->jabatanUser->jabatan) !!}</h5>
@@ -83,8 +83,8 @@
             <div class="col-md-6">
                 <!-- Kontrak Tanggal Mulai Field -->
                 <div class="form-group col-sm-12">
-                    <strong>{!! Form::label('kontrak_tgl_mulai', 'Tanggal Mulai Kontrak') !!}</strong>
-                    {!! Form::date('kontrak_tgl_mulai', null, ['class' => 'form-control']) !!}
+                    <strong>{!! Form::label('kontrak_tgl_mulai', 'Tanggal Mulai Kontrak') !!}<span class="text-danger" aria-hidden="true">&starf;</span></strong>
+                    {!! Form::date('kontrak_tgl_mulai', null, ['class' => 'form-control', 'required' => 'required']) !!}
                 </div>
             </div>
 

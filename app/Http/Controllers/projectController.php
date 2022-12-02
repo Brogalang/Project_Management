@@ -96,7 +96,33 @@ class projectController extends AppBaseController
      */
     public function store(CreateprojectRequest $request)
     {
-        $request->request->add(['project_id' => 'PRJ/' . Str::substr($request->departement, 0, 1) . '/' . date('Y-m'). '/' . rand(1000,9999)]);
+        if ($request->departement == "GOV") {
+            $codeDept="GOV";
+        }elseif ($request->departement == "BUMN") {
+            $codeDept="BUN";
+        }elseif ($request->departement == "PRIV") {
+            $codeDept="PRI";
+        }else{
+            $codeDept="PRJ";
+        }
+        $request->kontrak_tgl_mulai;
+        $thn_mulai=substr($request->kontrak_tgl_mulai,2,2);
+        $kode_prj=$codeDept.'/'.$thn_mulai.'/';
+        $nmbr = project::orderby('project_id', 'DESC')
+                            ->where('project_id', 'like' , "".$kode_prj."%")
+                            ->first();
+        if ($nmbr) {
+            $counter=sprintf("%03d",substr($nmbr->project_id,-3,3)+1);
+        }else{
+            $counter="001";
+        }
+        
+        // echo"<pre>";
+        // print_r($nmbr);
+        // echo"<pre>";
+        // print_r($kode_prj.$counter);
+        // die();
+        $request->request->add(['project_id' => ''.$codeDept.'/' . $thn_mulai . '/' . $counter]);
 
         $input = $request->all();
 
