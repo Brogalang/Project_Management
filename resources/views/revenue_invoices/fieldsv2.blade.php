@@ -95,7 +95,7 @@
          <!-- PIC Id Field -->
          <div class="form-group col-sm-7">
             <strong>{!! Form::label('pic', 'PIC Project:') !!}</strong>
-            <select name="pic" id="pic" class="form-control" data-control="select2">
+            <select name="pic" id="pic" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($useropt as $userpt)
                     @if($userpt->NIK == $revenueInvoice->pic)
@@ -111,7 +111,7 @@
         <!-- Departemen Id Field -->
         <div class="form-group col-sm-7">
             <strong>{!! Form::label('kd_dep', 'Kode Departemen:') !!}</strong>
-            <select name="kd_dep" id="kd_dep" class="form-control" data-control="select2">
+            <select name="kd_dep" id="kd_dep" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($depopt as $deppt)
                     @if($deppt->id == $revenueInvoice->kd_dep)
@@ -128,7 +128,7 @@
         <div class="form-group col-sm-7">
             <strong>{!! Form::label('kd_div', 'Kode Divisi:') !!}</strong>
             <!-- {!! Form::text('kd_div', null, ['class' => 'form-control']) !!} -->
-            <select name="kd_div" id="kd_div" class="form-control" data-control="select2">
+            <select name="kd_div" id="kd_div" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($divopt as $divpt)
                     @if($divpt->id == $revenueInvoice->kd_div)
