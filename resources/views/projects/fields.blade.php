@@ -12,7 +12,15 @@
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('departement', 'Departemen') !!}</strong>
             <h5>{!! Form::label('departement', Auth::user()->sub_divisi->subdivisi) !!}</h5>
-            {!! Form::text('departement', Auth::user()->sub_divisi->subdivisi, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
+            {!! Form::text('departement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <!-- Jabatan Field -->
+        <div class="form-group col-sm-6">
+            <strong>{!! Form::label('jabatan', 'Jabatan') !!}</strong>
+            <h5>{!! Form::label('jabatan', Auth::user()->jabatanUser->jabatan) !!}</h5>
+            {!! Form::text('jabatan', Auth::user()->jabatanUser->jabatan, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
     <div class="col-md-4">
@@ -39,6 +47,12 @@
             {!! Form::text('project', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
+        <!-- Client Fullname Field -->
+        <div class="form-group col-sm-12 col-lg-12"">
+            <strong>{!! Form::label('client_fullname', 'Nama Lengkap Client') !!}</strong>
+            {!! Form::textarea('client_fullname', null, ['class' => 'form-control', 'cols' => 3, 'rows' => 3]) !!}
+        </div>
+
         <!-- Project Fullname Field -->
         <div class="form-group col-sm-12 col-lg-12">
             <strong>{!! Form::label('project_fullname', 'Nama Lengkap Proyek') !!}</strong>
@@ -60,13 +74,17 @@
                     <strong>{!! Form::label('kontrak_no', 'Nomor Kontrak') !!}</strong>
                     {!! Form::text('kontrak_no', null, ['class' => 'form-control']) !!}
                 </div>
+                <div class="form-group col-sm-12">
+                    <strong>{!! Form::label('local_project_id', 'Id Project Local') !!}</strong>
+                    {!! Form::text('local_project_id', null, ['class' => 'form-control']) !!}
+                </div>
             </div>
 
             <div class="col-md-6">
                 <!-- Kontrak Tanggal Mulai Field -->
                 <div class="form-group col-sm-12">
-                    <strong>{!! Form::label('kontrak_tgl_mulai', 'Tanggal Mulai Kontrak') !!}</strong>
-                    {!! Form::date('kontrak_tgl_mulai', null, ['class' => 'form-control']) !!}
+                    <strong>{!! Form::label('kontrak_tgl_mulai', 'Tanggal Mulai Kontrak') !!}<span class="text-danger" aria-hidden="true">&starf;</span></strong>
+                    {!! Form::date('kontrak_tgl_mulai', null, ['class' => 'form-control', 'required' => 'required']) !!}
                 </div>
             </div>
 

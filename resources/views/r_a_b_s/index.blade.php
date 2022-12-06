@@ -13,7 +13,16 @@
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
                              RABS
-                             <a class="pull-right" href="{{ route('rABS.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                             @if($id_show!='')
+                                <table>
+                                    <form action="{{ route('rABS.create') }}" method="GET" class="form-horizontal">
+                                        <input type="hidden" name="id_show" id="id_show" value="{{$id_show}}">
+                                        <button class="pull-right"><i class="fa fa-plus-square fa-lg"></i></button>
+                                    </form>
+                                </table>
+                            @else
+                                <a class="pull-right" href="{{ route('rABS.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                            @endif
                          </div>
                          <div class="card-body">
                              @include('r_a_b_s.table')

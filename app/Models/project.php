@@ -44,11 +44,13 @@ class project extends Model
 
     public $fillable = [
         'project_id',
+        'local_project_id',
         'departement',
         'sales_am',
         'client',
         'project',
         'project_fullname',
+        'client_fullname',
         'jenis_project',
         'kontrak_no',
         'kontrak_tgl_mulai',
@@ -70,11 +72,13 @@ class project extends Model
     protected $casts = [
         'id' => 'integer',
         'project_id' => 'string',
+        'local_project_id' => 'string',
         'departement' => 'string',
         'sales_am' => 'string',
         'client' => 'string',
         'project' => 'string',
         'project_fullname' => 'string',
+        'client_fullname' => 'string',
         'jenis_project' => 'string',
         'kontrak_no' => 'string',
         'kontrak_tgl_mulai' => 'string',

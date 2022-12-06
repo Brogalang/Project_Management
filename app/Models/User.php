@@ -149,6 +149,11 @@ class User extends Authenticatable
         return $this->belongsTo(DivisiModel::class, 'Divisi', 'id');
     }
 
+    public function jabatanUser(): BelongsTo
+    {
+        return $this->belongsTo(JabatanModel::class, 'idjabatan', 'id');
+    }
+
     public function sub_divisi(): BelongsTo
     {
         return $this->belongsTo(SubDivisiModel::class, 'SubDivisi', 'id');

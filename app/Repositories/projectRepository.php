@@ -18,12 +18,14 @@ class projectRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'project_id',
+        'local_project_id',
         'divisi',
         'departement',
         'sales_am',
         'client',
         'project',
         'project_fullname',
+        'client_fullname',
         'jenis_project',
         'kontrak_no',
         'kontrak_tgl_mulai',

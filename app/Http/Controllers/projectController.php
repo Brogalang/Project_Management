@@ -31,8 +31,9 @@ class projectController extends AppBaseController
         $salesam = $request->amfind;
         $projects = project::where('project_id', 'like', "%" . $keyword . "%")
                             ->where('sales_am', 'like', "%" . $salesam . "%")
-                            ->orderby('id','DESC')->get();
-        return view('projects.index', compact('projects'))
+                            ->orderby('id','DESC')->paginate(10);
+        
+        return view('projects.index', compact('projects','keyword','salesam'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -48,24 +49,28 @@ class projectController extends AppBaseController
         $auth=Auth::user()->Nama;
         $projects = project::orderby('id', 'DESC')
                             ->where('sales_am', 'like' , "%".$auth."%")
-                            ->get();
+                            ->paginate(10);
         $nomor_po = purchase_order::get();
-        $userjab=Auth::user()->idjabatan;
-        $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
-        // $subdivisi=JabatanModel::where('id', '=', "226")->first();
-        // if ($subdivisi->id) {
-        //     echo"HALO";
+        // $userjab=Auth::user()->idjabatan;
+        // $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
+        // if (strpos($subdivisi->jabatan, "Account Manager") >=0) {
+
         // }
-        // $subdivisi=JabatanModel::where('id', '=', "30")->get();
+        // $coba=strpos($subdivisi->jabatan, "Account Manager");
+
         // echo"<pre>";
-        // print_r($subdivisi->id);
+        // print_r($coba);
+        // echo"<pre>";
+        // print_r($subdivisi->jabatan);
         // echo"</pre>";
         // die();
 
         // return view('projects.index')
         //     ->with('projects', $projects);
-
-        return view('projects.index',compact('projects','nomor_po'))
+        // strpos(strtolower($table_data), "where");
+        $keyword=null;
+        $salesam=null;
+        return view('projects.index',compact('projects','nomor_po','keyword','salesam'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
             
         // return view('form.kary',compact('data','menus','jab','dep'))
@@ -91,7 +96,33 @@ class projectController extends AppBaseController
      */
     public function store(CreateprojectRequest $request)
     {
-        $request->request->add(['project_id' => 'PRJ/' . Str::substr($request->departement, 0, 1) . '/' . date('Y-m'). '/' . rand(1000,9999)]);
+        if ($request->departement == "GOV") {
+            $codeDept="GOV";
+        }elseif ($request->departement == "BUMN") {
+            $codeDept="BUN";
+        }elseif ($request->departement == "PRIV") {
+            $codeDept="PRI";
+        }else{
+            $codeDept="PRJ";
+        }
+        $request->kontrak_tgl_mulai;
+        $thn_mulai=substr($request->kontrak_tgl_mulai,2,2);
+        $kode_prj=$codeDept.'/'.$thn_mulai.'/';
+        $nmbr = project::orderby('project_id', 'DESC')
+                            ->where('project_id', 'like' , "".$kode_prj."%")
+                            ->first();
+        if ($nmbr) {
+            $counter=sprintf("%03d",substr($nmbr->project_id,-3,3)+1);
+        }else{
+            $counter="001";
+        }
+        
+        // echo"<pre>";
+        // print_r($nmbr);
+        // echo"<pre>";
+        // print_r($kode_prj.$counter);
+        // die();
+        $request->request->add(['project_id' => ''.$codeDept.'/' . $thn_mulai . '/' . $counter]);
 
         $input = $request->all();
 
