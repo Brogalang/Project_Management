@@ -39,7 +39,7 @@ class RABController extends AppBaseController
                 ->get();
             $id_show=$request->id_show;
         }else {
-            $rABS = $this->rABRepository->all();
+            $rABS = $this->rABRepository->paginate(10);
             $id_show="";
         }
 

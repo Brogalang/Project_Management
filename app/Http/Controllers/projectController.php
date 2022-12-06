@@ -31,7 +31,7 @@ class projectController extends AppBaseController
         $salesam = $request->amfind;
         $projects = project::where('project_id', 'like', "%" . $keyword . "%")
                             ->where('sales_am', 'like', "%" . $salesam . "%")
-                            ->orderby('id','DESC')->get();
+                            ->orderby('id','DESC')->paginate(10);
         
         return view('projects.index', compact('projects','keyword','salesam'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -49,7 +49,7 @@ class projectController extends AppBaseController
         $auth=Auth::user()->Nama;
         $projects = project::orderby('id', 'DESC')
                             ->where('sales_am', 'like' , "%".$auth."%")
-                            ->get();
+                            ->paginate(10);
         $nomor_po = purchase_order::get();
         // $userjab=Auth::user()->idjabatan;
         // $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
