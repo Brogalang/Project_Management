@@ -36,7 +36,7 @@ class RABController extends AppBaseController
         // $rABS = $this->rABRepository->all();
         if ($request->id_show) {
             $rABS = RAB::where('project_rec_id', '=', $request->id_show)
-                ->get();
+                ->paginate(10);
             $id_show=$request->id_show;
         }else {
             $rABS = $this->rABRepository->paginate(10);
