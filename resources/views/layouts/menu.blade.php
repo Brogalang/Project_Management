@@ -16,7 +16,7 @@
         <span>Rab Details</span>
     </a>
 </li> -->
-<li class="nav-item nav-dropdown ">
+{{--<li class="nav-item nav-dropdown ">
     <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-tasks text-info"></i><span class="menu-title">Project Management</span></a>
     <ul class="nav-dropdown-items">
         <!-- <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
@@ -47,7 +47,7 @@
             </a>
         </li> -->
     </ul>
-</li>
+</li>--}}
 <li class="nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('rabDetails.index') }}">
         <i class="nav-icon fa fa-credit-card text-danger"></i>
