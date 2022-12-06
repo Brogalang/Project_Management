@@ -32,7 +32,7 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('project_rec_id', 'Project:') !!}
-    <select name="project_rec_id" id="project_rec_id" class="form-control form-select">
+    <select name="project_rec_id" id="project_rec_id" class="form-control select2">
         <option value=""></option>
         @foreach ($projects as $project)
             @if($project->id == $rAB->project_rec_id)

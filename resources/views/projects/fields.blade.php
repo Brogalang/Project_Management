@@ -12,7 +12,7 @@
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('departement', 'Departemen') !!}</strong>
             <h5>{!! Form::label('departement', Auth::user()->sub_divisi->subdivisi) !!}</h5>
-            {!! Form::text('departement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control']) !!}
+            {!! Form::text('departement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
         </div>
     </div>
     <div class="col-md-4">

@@ -57,13 +57,13 @@
         <div class="form-group col-sm-7">
             <strong>{!! Form::label('id_project', 'Project:') !!}</strong>
             <!-- {!! Form::text('id_project', null, ['class' => 'form-control']) !!} -->
-            <select name="id_project" id="id_project" class="form-control" data-control="select2">
+            <select name="id_project" id="id_project" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($prjopt as $prj)
                     @if($prj->project_id == $revenueInvoice->id_project)
-                        <option value='{{$prj->project_id}}' selected>{{$prj->project_id}}</option>
+                        <option value='{{$prj->project_id}}' selected>{{$prj->project_id}} - {{$prj->project}}</option>
                     @else{
-                        <option value='{{$prj->project_id}}'>{{$prj->project_id}}</option>
+                        <option value='{{$prj->project_id}}'>{{$prj->project_id}} - {{$prj->project}}</option>
                     }
                     @endif
                 @endforeach

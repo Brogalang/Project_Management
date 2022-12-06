@@ -70,14 +70,9 @@
                     </button>
                     
                     <div class="dropdown-menu dropdown-menu-right">
-                        <div>
-                            <table border="1">
-                                <form action="{{ route('invoices.index') }}" method="GET" class="form-horizontal">
-                                    <input type="hidden" name="project_idShow" id="project_idShow" value="{{$project->project_id}}">
-                                    <button class="dropdown-item">Delivery</button>
-                                </form>
-                            </table>
-                        </div>
+                        <button class="dropdown-item" onclick="tasklist('{{$project->project_id}}')">Task List</button>
+                        <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
+                        <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
                         <div>
                             <table border="1">
                                 <form action="{{ route('rABS.index') }}" method="GET" class="form-horizontal">
@@ -86,9 +81,14 @@
                                 </form>
                             </table>
                         </div>
-                        <button class="dropdown-item" onclick="tasklist('{{$project->project_id}}')">Task List</button>
-                        <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
-                        <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
+                        <div>
+                            <table border="1">
+                                <form action="{{ route('revenueInvoices.index') }}" method="GET" class="form-horizontal">
+                                    <input type="hidden" name="project_idShow" id="project_idShow" value="{{$project->project_id}}">
+                                    <button class="dropdown-item">Revenue Invoices</button>
+                                </form>
+                            </table>
+                        </div>
                     </div>
                 </td>
                 <td>

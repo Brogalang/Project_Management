@@ -11,6 +11,7 @@ use App\Models\project;
 use App\Models\User;
 use App\Models\DivisiModel;
 use App\Models\SubDivisiModel;
+use App\Models\revenue_invoice;
 use Flash;
 use Response;
 use DB;
@@ -34,12 +35,19 @@ class revenue_invoiceController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $revenueInvoices = $this->revenueInvoiceRepository->all();
+        if ($request->project_idShow) {
+            $revenueInvoices = revenue_invoice::where('id_project', '=', $request->project_idShow)
+                                ->get();
+            $id_show=$request->project_idShow;
+        }else{
+            $revenueInvoices = $this->revenueInvoiceRepository->all();
+            $id_show="";
+        }
 
         $projectdb = DB::table('projects')
                     ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.id_project', '=', 'projects.project_id')
                     ->get();
-        return view('revenue_invoices.index',compact('projectdb'))
+        return view('revenue_invoices.index',compact('projectdb','id_show'))
             ->with('revenueInvoices', $revenueInvoices);
     }
 
@@ -48,13 +56,18 @@ class revenue_invoiceController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->id_show) {
+            $id_show=$request->id_show;
+        }else {
+            $id_show="";
+        }
         $prjopt=project::all();
         $useropt=User::all();
         $depopt=DivisiModel::all();
         $divopt=SubDivisiModel::all();
-        return view('revenue_invoices.create',compact('prjopt','useropt','depopt','divopt'));
+        return view('revenue_invoices.create',compact('prjopt','useropt','depopt','divopt','id_show'));
         // return view('revenue_invoices.create');
     }
 
