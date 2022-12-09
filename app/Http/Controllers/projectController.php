@@ -9,11 +9,13 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\project;
 use App\Models\JabatanModel;
 use App\Models\purchase_order;
+use App\Models\SubDivisiModel;
 use Auth;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
 use Str;
+use DB;
 
 class projectController extends AppBaseController
 {
@@ -28,12 +30,21 @@ class projectController extends AppBaseController
     public function search(Request $request)
     {
         $keyword = $request->prjfind;
+        $client = $request->clientfind;
         $salesam = $request->amfind;
-        $projects = project::where('project_id', 'like', "%" . $keyword . "%")
+        $departement = $request->depfind;
+        $depopt=SubDivisiModel::all();
+        $projects = project::where('project', 'like', "%" . $keyword . "%")
                             ->where('sales_am', 'like', "%" . $salesam . "%")
+                            ->where('client', 'like', "%" . $client . "%")
+                            ->where('departement', 'like', "%" . $departement . "%")
                             ->orderby('id','DESC')->paginate(10);
+        $amopt = DB::table('tb_datapribadi')
+                    ->join('tb_jabatan', 'tb_jabatan.id', '=', 'tb_datapribadi.idjabatan')
+                    ->where('tb_jabatan.jabatan','like',"%Account Manager%")
+                    ->get();
         
-        return view('projects.index', compact('projects','keyword','salesam'))
+        return view('projects.index', compact('projects','keyword','salesam','client','departement','amopt','depopt'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -51,6 +62,11 @@ class projectController extends AppBaseController
                             ->where('sales_am', 'like' , "%".$auth."%")
                             ->paginate(10);
         $nomor_po = purchase_order::get();
+        $depopt=SubDivisiModel::all();
+        $amopt = DB::table('tb_datapribadi')
+                    ->join('tb_jabatan', 'tb_jabatan.id', '=', 'tb_datapribadi.idjabatan')
+                    ->where('tb_jabatan.jabatan','like',"%Account Manager%")
+                    ->get();
         // $userjab=Auth::user()->idjabatan;
         // $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
         // if (strpos($subdivisi->jabatan, "Account Manager") >=0) {
@@ -70,7 +86,9 @@ class projectController extends AppBaseController
         // strpos(strtolower($table_data), "where");
         $keyword=null;
         $salesam=null;
-        return view('projects.index',compact('projects','nomor_po','keyword','salesam'))
+        $client=null;
+        $departement=null;
+        return view('projects.index',compact('projects','nomor_po','keyword','salesam','client','departement','amopt','depopt'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
             
         // return view('form.kary',compact('data','menus','jab','dep'))
@@ -96,11 +114,11 @@ class projectController extends AppBaseController
      */
     public function store(CreateprojectRequest $request)
     {
-        if ($request->departement == "GOV") {
+        if ($request->codedepartement == "GOV") {
             $codeDept="GOV";
-        }elseif ($request->departement == "BUMN") {
+        }elseif ($request->codedepartement == "BUMN") {
             $codeDept="BUN";
-        }elseif ($request->departement == "PRIV") {
+        }elseif ($request->codedepartement == "PRIV") {
             $codeDept="PRI";
         }else{
             $codeDept="PRJ";

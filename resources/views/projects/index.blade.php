@@ -26,14 +26,47 @@
             <form action="{{ route('search') }}" method="GET" class="form-horizontal">
                 <table >
                     <tr>
-                        <td>Kode Project</td>
+                        <td><strong>Nama Project</strong></td>
                         <td>:</td>
                         <td><input type="text" id="prjfind" name="prjfind" class="form-control" value="{{$keyword}}"></td>
+
+                        <td><strong>Client</strong></td>
+                        <td>:</td>
+                        <td><input type="text" id="clientfind" name="clientfind" class="form-control" value="{{$client}}"></td>
                     </tr>
                     <tr>
-                        <td>Sales AM</td>
+                        <td><strong>Sales AM</strong></td>
                         <td>:</td>
-                        <td><input type="text" id="amfind" name="amfind" class="form-control" value="{{$salesam}}"></td>
+                        <td>
+                            {{--<input type="text" id="amfind" name="amfind" class="form-control" value="{{$salesam}}">--}}
+                            <select name="amfind" id="amfind" class="form-control select2" style="width: 100%;">
+                                <option value=''>Pilih Data</option>
+                                @foreach ($amopt as $optam)
+                                    <option value='{{$optam->Nama}}'>{{$optam->Nama}}</option>
+                                    @if($optam->Nama==$salesam)
+                                        <option value='{{$optam->Nama}}' selected>{{$optam->Nama}}</option>
+                                    @else
+                                        <option value='{{$optam->Nama}}'>{{$optam->Nama}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        
+                        <td><strong>Departement</strong></td>
+                        <td>:</td>
+                        <td>
+                            {{--<input type="text" id="depfind" name="depfind" class="form-control" value="{{$departement}}">--}}
+                            <select name="depfind" id="depfind" class="form-control select2" style="width: 100%;">
+                                <option value=''>Pilih Data</option>
+                                @foreach ($depopt as $optdep)
+                                    @if($optdep->subdivisi==$departement)
+                                        <option value='{{$optdep->subdivisi}}'selected>{{$optdep->subdivisi}}</option>
+                                    @else
+                                        <option value='{{$optdep->subdivisi}}'>{{$optdep->subdivisi}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan=2></td>

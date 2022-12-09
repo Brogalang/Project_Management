@@ -94,7 +94,7 @@
          <!-- PIC Id Field -->
          <div class="form-group col-sm-7">
             <strong>{!! Form::label('pic', 'PIC Project:') !!}</strong>
-            <select name="pic" id="pic" class="form-control" data-control="select2">
+            <select name="pic" id="pic" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($useropt as $userpt)
                     <option value='{{$userpt->NIK}}'>{{$userpt->NIK}} - {{$userpt->Nama}}</option>
@@ -106,7 +106,7 @@
         <!-- Departemen Id Field -->
         <div class="form-group col-sm-7">
             <strong>{!! Form::label('kd_dep', 'Kode Departemen:') !!}</strong>
-            <select name="kd_dep" id="kd_dep" class="form-control" data-control="select2">
+            <select name="kd_dep" id="kd_dep" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($depopt as $deppt)
                     <option value='{{$deppt->id}}'>{{$deppt->id}} - {{$deppt->nama_div_ext}}</option>
@@ -118,7 +118,7 @@
         <div class="form-group col-sm-7">
             <strong>{!! Form::label('kd_div', 'Kode Divisi:') !!}</strong>
             <!-- {!! Form::text('kd_div', null, ['class' => 'form-control']) !!} -->
-            <select name="kd_div" id="kd_div" class="form-control" data-control="select2">
+            <select name="kd_div" id="kd_div" class="form-control select2">
                 <option value=''>Pilih Data</option>
                 @foreach ($divopt as $divpt)
                     <option value='{{$divpt->id}}'>{{$divpt->id}} - {{$divpt->subdivisi}}</option>
