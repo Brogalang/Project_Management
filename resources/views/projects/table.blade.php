@@ -105,10 +105,10 @@
         </tbody>
     </table>
 </div>
-<div class="card-footer text-right">
+{{--<div class="card-footer text-right">
     <nav class="d-inline-block">
         {{$projects->links()}}
     </nav>
-</div>
+</div>--}}
 @include('projects.modal')
 
