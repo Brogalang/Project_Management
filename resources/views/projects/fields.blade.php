@@ -1,5 +1,5 @@
 <div class="row bg-danger p-2">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Divisi Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('divisi', 'Divisi') !!}</strong>
@@ -7,7 +7,7 @@
             {!! Form::text('divisi', Auth::user()->divisi->nama_div_ext, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Departement Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('departement', 'Departemen') !!}</strong>
@@ -16,7 +16,7 @@
             {!! Form::text('codedepartement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Jabatan Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('jabatan', 'Jabatan') !!}</strong>
@@ -24,7 +24,7 @@
             {!! Form::text('jabatan', Auth::user()->jabatanUser->jabatan, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Sales Am Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('sales_am', 'Sales AM') !!}</strong>
