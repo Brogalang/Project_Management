@@ -33,16 +33,30 @@
                         <td><strong>Client</strong></td>
                         <td>:</td>
                         <td><input type="text" id="clientfind" name="clientfind" class="form-control" value="{{$client}}"></td>
+
+                        <td><strong>Divisi</strong></td>
+                        <td>:</td>
+                        <td>
+                            <select name="divfind" id="divfind" class="form-control select2" style="width: 200px;" {{$disabled}}>
+                                <option value=''>Pilih Data</option>
+                                @foreach ($divopt as $optdiv)
+                                    @if($optdiv->nama_div_ext==$divisi)
+                                        <option value='{{$optdiv->nama_div_ext}}'selected>{{$optdiv->nama_div_ext}}</option>
+                                    @else
+                                        <option value='{{$optdiv->nama_div_ext}}'>{{$optdiv->nama_div_ext}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Sales AM</strong></td>
                         <td>:</td>
                         <td>
                             {{--<input type="text" id="amfind" name="amfind" class="form-control" value="{{$salesam}}">--}}
-                            <select name="amfind" id="amfind" class="form-control select2" style="width: 100%;">
+                            <select name="amfind" id="amfind" class="form-control select2" style="width: 200px;">
                                 <option value=''>Pilih Data</option>
                                 @foreach ($amopt as $optam)
-                                    <option value='{{$optam->Nama}}'>{{$optam->Nama}}</option>
                                     @if($optam->Nama==$salesam)
                                         <option value='{{$optam->Nama}}' selected>{{$optam->Nama}}</option>
                                     @else
@@ -56,7 +70,7 @@
                         <td>:</td>
                         <td>
                             {{--<input type="text" id="depfind" name="depfind" class="form-control" value="{{$departement}}">--}}
-                            <select name="depfind" id="depfind" class="form-control select2" style="width: 100%;">
+                            <select name="depfind" id="depfind" class="form-control select2" style="width: 200px;">
                                 <option value=''>Pilih Data</option>
                                 @foreach ($depopt as $optdep)
                                     @if($optdep->subdivisi==$departement)
