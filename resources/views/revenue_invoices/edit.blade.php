@@ -20,7 +20,7 @@
                           <div class="card-body">
                               {!! Form::model($revenueInvoice, ['route' => ['revenueInvoices.update', $revenueInvoice->id], 'method' => 'patch']) !!}
 
-                              @include('revenue_invoices.fields')
+                              @include('revenue_invoices.fieldsv2')
 
                               {!! Form::close() !!}
                             </div>

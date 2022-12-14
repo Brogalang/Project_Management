@@ -20,7 +20,7 @@
                           <div class="card-body">
                               {!! Form::model($rAB, ['route' => ['rABS.update', $rAB->id], 'method' => 'patch']) !!}
 
-                              @include('r_a_b_s.fields')
+                              @include('r_a_b_s.fieldsv2')
 
                               {!! Form::close() !!}
                             </div>

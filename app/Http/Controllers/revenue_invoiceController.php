@@ -7,8 +7,14 @@ use App\Http\Requests\Updaterevenue_invoiceRequest;
 use App\Repositories\revenue_invoiceRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\project;
+use App\Models\User;
+use App\Models\DivisiModel;
+use App\Models\SubDivisiModel;
+use App\Models\revenue_invoice;
 use Flash;
 use Response;
+use DB;
 
 class revenue_invoiceController extends AppBaseController
 {
@@ -29,9 +35,19 @@ class revenue_invoiceController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $revenueInvoices = $this->revenueInvoiceRepository->all();
+        if ($request->project_idShow) {
+            $revenueInvoices = revenue_invoice::where('id_project', '=', $request->project_idShow)
+                                ->get();
+            $id_show=$request->project_idShow;
+        }else{
+            $revenueInvoices = $this->revenueInvoiceRepository->all();
+            $id_show="";
+        }
 
-        return view('revenue_invoices.index')
+        $projectdb = DB::table('projects')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.id_project', '=', 'projects.project_id')
+                    ->get();
+        return view('revenue_invoices.index',compact('projectdb','id_show'))
             ->with('revenueInvoices', $revenueInvoices);
     }
 
@@ -40,9 +56,19 @@ class revenue_invoiceController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('revenue_invoices.create');
+        if ($request->id_show) {
+            $id_show=$request->id_show;
+        }else {
+            $id_show="";
+        }
+        $prjopt=project::all();
+        $useropt=User::all();
+        $depopt=DivisiModel::all();
+        $divopt=SubDivisiModel::all();
+        return view('revenue_invoices.create',compact('prjopt','useropt','depopt','divopt','id_show'));
+        // return view('revenue_invoices.create');
     }
 
     /**
@@ -79,8 +105,23 @@ class revenue_invoiceController extends AppBaseController
 
             return redirect(route('revenueInvoices.index'));
         }
+        $projectdb = DB::table('projects')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.id_project', '=', 'projects.project_id')
+                    ->get();
+        $picdb = DB::table('tb_datapribadi')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.pic', '=', 'tb_datapribadi.NIK')
+                    ->get();
+        $depdb = DB::table('tbldivmaster')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.kd_dep', '=', 'tbldivmaster.id')
+                    ->get();
+        // echo"<pre>";
+        // print_r($depdb);
+        // die();
+        $divdb = DB::table('tb_subdivisi')
+                    ->join('revenue_invoices_realisasi', 'revenue_invoices_realisasi.kd_div', '=', 'tb_subdivisi.id')
+                    ->get();
 
-        return view('revenue_invoices.show')->with('revenueInvoice', $revenueInvoice);
+        return view('revenue_invoices.show',compact('projectdb','picdb','depdb','divdb'))->with('revenueInvoice', $revenueInvoice);
     }
 
     /**
@@ -93,6 +134,10 @@ class revenue_invoiceController extends AppBaseController
     public function edit($id)
     {
         $revenueInvoice = $this->revenueInvoiceRepository->find($id);
+        $prjopt=project::all();
+        $useropt=User::all();
+        $depopt=DivisiModel::all();
+        $divopt=SubDivisiModel::all();
 
         if (empty($revenueInvoice)) {
             Flash::error('Revenue Invoice not found');
@@ -100,7 +145,7 @@ class revenue_invoiceController extends AppBaseController
             return redirect(route('revenueInvoices.index'));
         }
 
-        return view('revenue_invoices.edit')->with('revenueInvoice', $revenueInvoice);
+        return view('revenue_invoices.edit',compact('prjopt','useropt','depopt','divopt'))->with('revenueInvoice', $revenueInvoice);
     }
 
     /**

@@ -33,9 +33,17 @@ class RABController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $rABS = $this->rABRepository->all();
+        // $rABS = $this->rABRepository->all();
+        if ($request->id_show) {
+            $rABS = RAB::where('project_rec_id', '=', $request->id_show)
+                ->paginate(10);
+            $id_show=$request->id_show;
+        }else {
+            $rABS = $this->rABRepository->paginate(10);
+            $id_show="";
+        }
 
-        return view('r_a_b_s.index')
+        return view('r_a_b_s.index',compact('id_show'))
             ->with('rABS', $rABS);
     }
 
@@ -44,12 +52,17 @@ class RABController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->id_show) {
+            $id_show=$request->id_show;
+        }else {
+            $id_show="";
+        }
         $user_div = Auth::user()->divisi->nama_div_ext;
         $projects = project::get();
 
-        return view('r_a_b_s.create')->with('projects', $projects);
+        return view('r_a_b_s.create',compact('id_show'))->with('projects', $projects);
     }
 
     /**

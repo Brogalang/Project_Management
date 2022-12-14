@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->id('id');
             $table->integer('project_id');
             $table->string('invoice_no');
+            $table->string('invoice_no');
             $table->string('invoice_date');
             $table->string('nama_pelanggan');
             $table->string('jatuh_tempo');

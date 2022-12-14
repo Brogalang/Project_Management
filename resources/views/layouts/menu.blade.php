@@ -1,3 +1,9 @@
+<li class="nav-item {{ Request::is('clients*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('clients.index') }}">
+        <i class="nav-icon fa fa-users  text-primary"></i>
+        <span>Clients</span>
+    </a>
+</li>
 <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('projects.index') }}">
         <i class="nav-icon fa fa-tasks text-info"></i>
@@ -10,14 +16,71 @@
         <span>RAB Project</span>
     </a>
 </li>
-<li class="d-none nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">
+<!-- <li class="d-none nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('rabDetails.index') }}">
         <i class="nav-icon icon-cursor"></i>
         <span>Rab Details</span>
     </a>
+</li> -->
+{{--<li class="nav-item nav-dropdown ">
+    <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-tasks text-info"></i><span class="menu-title">Project Management</span></a>
+    <ul class="nav-dropdown-items">
+        <!-- <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('projects.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Project</span>
+            </a>
+        </li> -->
+
+        <!-- <li class="nav-item {{ Request::is('purchaseOrders*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('purchaseOrders.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Task List</span>
+            </a>
+        </li> -->
+
+        <li class="nav-item {{ Request::is('invoices*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('invoices.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Delivery</span>
+            </a>
+        </li>
+
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="{{ route('laporan_mingguan.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Laporan Mingguan</span>
+            </a>
+        </li> -->
+    </ul>
+</li>--}}
+<li class="nav-item {{ Request::is('rabDetails*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('rabDetails.index') }}">
+        <i class="nav-icon fa fa-credit-card text-danger"></i>
+        <span>FPPBJ</span>
+    </a>
 </li>
+
 <li class="nav-item nav-dropdown ">
-    <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-credit-card text-danger"></i><span class="menu-title">Biaya</span></a>
+    <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-money text-success"></i><span class="menu-title">Realisasi Pendapatan</span></a>
+    <ul class="nav-dropdown-items">
+        <li class="nav-item {{ Request::is('revenueInvoices*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('revenueInvoices.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Invoice</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('revenuePayments*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('revenuePayments.index') }}">
+                <i class="nav-icon fa fa-empty text-secondary"></i>
+                <span>Payments</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item nav-dropdown ">
+    <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-credit-card text-danger"></i><span class="menu-title">Realisasi Biaya</span></a>
     <ul class="nav-dropdown-items">
         <li class="nav-item {{ Request::is('purchaseOrders*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('purchaseOrders.index') }}">
@@ -42,25 +105,9 @@
     </ul>
 </li>
 
-<li class="nav-item nav-dropdown ">
-    <a href="#" class="nav-link nav-dropdown-toggle"><i class="nav-icon fa fa-money text-success"></i><span class="menu-title">Pendapatan</span></a>
-    <ul class="nav-dropdown-items">
-        <li class="nav-item {{ Request::is('revenueInvoices*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('revenueInvoices.index') }}">
-                <i class="nav-icon fa fa-empty text-secondary"></i>
-                <span>Invoices</span>
-            </a>
-        </li>
-        <li class="nav-item {{ Request::is('revenuePayments*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('revenuePayments.index') }}">
-                <i class="nav-icon fa fa-empty text-secondary"></i>
-                <span>Payments</span>
-            </a>
-        </li>
-    </ul>
-</li>
 
-<li class="nav-item {{ Request::is('realisasi*') ? 'active' : '' }} d-none">
+
+<!-- <li class="nav-item {{ Request::is('realisasi*') ? 'active' : '' }} d-none">
     <a class="nav-link" href="#">
         <i class="nav-icon icon-cursor"></i>
         <span>Realisasi</span>
@@ -79,7 +126,7 @@
         <i class="nav-icon fa fa-users  text-primary"></i>
         <span>Clients</span>
     </a>
-</li>
+</li> -->
 <hr>
 
 <li class="nav-item">

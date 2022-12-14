@@ -32,3 +32,8 @@
         </tbody>
     </table>
 </div>
+<div class="card-footer text-right">
+    <nav class="d-inline-block">
+        {{$rABS->links()}}
+    </nav>
+</div>

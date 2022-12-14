@@ -7,10 +7,15 @@ use App\Http\Requests\UpdateprojectRequest;
 use App\Repositories\projectRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\project;
+use App\Models\JabatanModel;
+use App\Models\DivisiModel;
+use App\Models\SubDivisiModel;
+use Auth;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
 use Str;
+use DB;
 
 class projectController extends AppBaseController
 {
@@ -22,6 +27,53 @@ class projectController extends AppBaseController
         $this->projectRepository = $projectRepo;
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->prjfind;
+        $client = $request->clientfind;
+        $salesam = $request->amfind;
+        $departement = $request->depfind;
+        $divisi = $request->divfind;
+        $depopt = DB::select("select * from tb_subdivisi a 
+                            left join tbldivmaster b on a.iddivisi=b.id
+                            where b.nama_div_ext like '%Commercial%'
+                            ");
+        $amopt = DB::select("select distinct a.Nama from tb_datapribadi a 
+                            left join tb_jabatan b on a.idjabatan=b.id
+                            left join tbldivmaster c on a.Divisi=c.id
+                            where b.jabatan like '%Account Manager%' and c.nama_div_ext like '%Commercial%'
+                            ");
+        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+
+        if ($departement!='') {
+            $projects = DB::select("select a.id as id,a.*,b.* from projects a 
+                                left join tb_datapribadi b on a.sales_am like concat('%', b.Nama, '%')
+                                left join tb_subdivisi c on b.SubDivisi=c.id
+                                where c.subdivisi like '%".$departement."%' and a.project like '%".$keyword."%'
+                                and a.sales_am like '%".$salesam."%'
+                                and a.client like '%".$client."%'
+                                and a.departement like '%".$divisi."%'
+                                ");
+        }else{
+            $projects = project::where('project', 'like', "%" . $keyword . "%")
+                                ->where('sales_am', 'like', "%" . $salesam . "%")
+                                ->where('client', 'like', "%" . $client . "%")
+                                ->where('departement', 'like', "%" . $divisi . "%")
+                                ->orderby('id','DESC')->get();
+        }
+        $divuser=DivisiModel::where('id', '=', Auth::user()->Divisi)->first();
+        if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
+            $disabled="";
+        }else{
+            $disabled="disabled";
+        }
+        
+        // print_r($request->page);
+        // die();
+        return view('projects.index', compact('projects','keyword','salesam','client','departement','amopt','depopt','divisi','divopt','disabled'))
+        ->with('i');
+    }
+
     /**
      * Display a listing of the project.
      *
@@ -31,10 +83,64 @@ class projectController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $projects = project::orderby('id', 'DESC')->get();
+        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
 
-        return view('projects.index')
-            ->with('projects', $projects);
+        $depopt = DB::select("select * from tb_subdivisi a 
+                            left join tbldivmaster b on a.iddivisi=b.id
+                            where b.nama_div_ext like '%Commercial%'
+                            ");
+        $amopt = DB::select("select distinct a.Nama from tb_datapribadi a 
+                            left join tb_jabatan b on a.idjabatan=b.id
+                            left join tbldivmaster c on a.Divisi=c.id
+                            where b.jabatan like '%Account Manager%' and c.nama_div_ext like '%Commercial%'
+                            ");
+        function cekauthkar($jabatan){
+            if (strpos($jabatan, "Account Manager")!== false) {
+                $projects = project::orderby('id', 'DESC')
+                            ->where('sales_am', 'like' , "%".Auth::user()->Nama."%")
+                            ->get();
+            }elseif (strpos($jabatan, "Kepala Divisi")!== false) {
+                $projects = DB::select("select * from projects a
+                                        left join tb_datapribadi b on a.sales_am like concat('%', b.Nama, '%')
+                                        left join tbldivmaster c on b.Divisi=c.id
+                                        where c.id ='".Auth::user()->Divisi."'
+                                    ");
+            }elseif (strpos($jabatan, "Kepala Departemen")!== false) {
+                $projects = DB::select("select * from projects a
+                                        left join tb_datapribadi b on a.sales_am like concat('%', b.Nama, '%')
+                                        left join tb_subdivisi c on b.SubDivisi=c.id
+                                        where c.id = '".Auth::user()->SubDivisi."'
+                                    ");
+            }
+            return $projects;
+        }
+        
+        $userjab=Auth::user()->idjabatan;
+        $subdivisi=JabatanModel::where('id', '=', $userjab)->first();
+        $projects=cekauthkar($subdivisi->jabatan);
+
+        $divuser=DivisiModel::where('id', '=', Auth::user()->Divisi)->first();
+
+        if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
+            $disabled="";
+        }else{
+            $disabled="disabled";
+        }
+
+        // echo"<pre>";
+        // print_r($subdivisi->jabatan);
+        // echo"<pre>";
+        // print_r($divuser->nama_div_ext);
+        // echo"</pre>";
+        // die();
+
+        $keyword=null;
+        $salesam=null;
+        $client=null;
+        $departement=null;
+        $divisi=null;
+        return view('projects.index',compact('projects','keyword','salesam','client','departement','amopt','depopt','divopt','divisi','disabled'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -56,7 +162,33 @@ class projectController extends AppBaseController
      */
     public function store(CreateprojectRequest $request)
     {
-        $request->request->add(['project_id' => 'PRJ/' . Str::substr($request->departement, 0, 1) . '/' . date('Y-m'). '/' . rand(1000,9999)]);
+        if ($request->codedepartement == "GOV") {
+            $codeDept="GOV";
+        }elseif ($request->codedepartement == "BUMN") {
+            $codeDept="BUN";
+        }elseif ($request->codedepartement == "PRIV") {
+            $codeDept="PRI";
+        }else{
+            $codeDept="PRJ";
+        }
+        $request->kontrak_tgl_mulai;
+        $thn_mulai=substr($request->kontrak_tgl_mulai,2,2);
+        $kode_prj=$codeDept.'/'.$thn_mulai.'/';
+        $nmbr = project::orderby('project_id', 'DESC')
+                            ->where('project_id', 'like' , "".$kode_prj."%")
+                            ->first();
+        if ($nmbr) {
+            $counter=sprintf("%03d",substr($nmbr->project_id,-3,3)+1);
+        }else{
+            $counter="001";
+        }
+        
+        // echo"<pre>";
+        // print_r($nmbr);
+        // echo"<pre>";
+        // print_r($kode_prj.$counter);
+        // die();
+        $request->request->add(['project_id' => ''.$codeDept.'/' . $thn_mulai . '/' . $counter]);
 
         $input = $request->all();
 

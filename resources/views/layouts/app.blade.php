@@ -41,7 +41,13 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
 
+        <!-- Select2 -->
+        <link rel="stylesheet" href="{{asset('select2/css/select2.min.css')}}">
+        <link rel="stylesheet" href="{{asset('select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        @include('layouts.datatables_css')
+        
     </head>
     <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     <header class="app-header navbar">
@@ -125,6 +131,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@2.1.16/dist/js/coreui.min.js"></script>
+    <!-- Select2 -->
+    <script src="{{asset('select2/js/select2.full.min.js')}}"></script>
+    @include('layouts.datatables_js')
 
     <script>
         $.ajaxSetup({
@@ -133,6 +142,20 @@
             }
         });
     </script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            })
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
     @stack('scripts')
+    @stack('javascript');
 </body>
 </html>

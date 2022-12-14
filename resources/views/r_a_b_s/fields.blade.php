@@ -32,10 +32,14 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('project_rec_id', 'Project:') !!}
-    <select name="project_rec_id" id="project_rec_id" class="form-control form-select">
+    <select name="project_rec_id" id="project_rec_id" class="form-control select2">
         <option value=""></option>
         @foreach ($projects as $project)
-            <option value="{{$project->id}}">{{ $project->project_id . ' - ' . $project->project }}</option>
+            @if($project->id==$id_show)
+                <option value="{{$project->id}}" selected>{{ $project->project_id . ' - ' . $project->project }}</option>
+            @else
+                <option value="{{$project->id}}">{{ $project->project_id . ' - ' . $project->project }}</option>
+            @endif
         @endforeach
     </select>
 </div>

@@ -13,7 +13,16 @@
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
                              revenue_invoices
-                             <a class="pull-right" href="{{ route('revenueInvoices.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                             @if($id_show!='')
+                                <table>
+                                    <form action="{{ route('revenueInvoices.create') }}" method="GET" class="form-horizontal">
+                                        <input type="hidden" name="id_show" id="id_show" value="{{$id_show}}">
+                                        <button class="pull-right"><i class="fa fa-plus-square fa-lg"></i></button>
+                                    </form>
+                                </table>
+                            @else
+                                <a class="pull-right" href="{{ route('revenueInvoices.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                            @endif
                          </div>
                          <div class="card-body">
                              @include('revenue_invoices.table')

@@ -4,10 +4,11 @@
             <tr>
                 <th>No.</th>
                 <th>Project</th>
-                <th>Pemilik</th>
-                <th>Client</th>
+                <th>Sektor</th>
+                {{--<th>Client</th>--}}
                 <th>Kontrak</th>
-                <th>Status</th>
+                {{--<th>Status</th>--}}
+                <th nowrap>Add Detail</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -19,8 +20,20 @@
                 </td>
                 <td>
                     <h6><strong>{{ $project->project_id }}</strong></h6>
+                    <h6>{{ $project->local_project_id }}</h6>
                     <h6>{{ $project->project }}</h6>
-                    <h6 class="text-danger">({{ $project->jenis_project }})</h6>
+                    <h6 class="text-danger">
+                        ({{ $project->jenis_project }})
+                        @if ($project->status == 'Sedang Berjalan')
+                            <span class="badge badge-warning">{{ $project->status }}</span>
+                        @elseif ($project->status == 'Selesai')
+                            <span class="badge badge-success">{{ $project->status }}</span>
+                        @elseif ($project->status == 'Batal')
+                            <span class="badge badge-danger">{{ $project->status }}</span>
+                        @endif
+                    </h6>
+                    <h6>{{ $project->client }}</h6>
+                    {{--<h6>{{ $project->client_fullname }}</h6>--}}
                 </td>
                 <td>
                     <small><strong>{{ $project->divisi }}</strong></small>
@@ -29,7 +42,7 @@
                     <small><strong>Sales AM</strong></small>
                     <h6>{{ $project->sales_am }}</h6>
                 </td>
-                <td><h6>{{ $project->client }}</h6></td>
+                {{--<td><h6>{{ $project->client }}</h6></td>--}}
                 <td>
                     <small>No. Kontrak</small>
                     <h6><strong>{{ $project->kontrak_no }}</strong></h6>
@@ -41,7 +54,7 @@
                     <h6><strong>{{ number_format($project->nilai_kontrak_BT, 0) }}</strong></h6>
                     <h6><strong><i>({{ number_format($project->nilai_kontrak_AT, 0) }})</i></strong></h6>
                 </td>
-                <td>
+                {{--<td>
                     @if ($project->status == 'Sedang Berjalan')
                         <h6><span class="badge badge-warning">{{ $project->status }}</span></h6>
                     @elseif ($project->status == 'Selesai')
@@ -49,6 +62,34 @@
                     @elseif ($project->status == 'Batal')
                         <h6><span class="badge badge-danger">{{ $project->status }}</span></h6>
                     @endif
+                </td>--}}
+                <td style="text-align:center;">
+                    <button class="btn btn-success" data-toggle="dropdown" href="#" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                        Add
+                    </button>
+                    
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item" onclick="tasklist('{{$project->project_id}}')">Task List</button>
+                        <button class="dropdown-item" onclick="pendingJ('{{$project->project_id}}')">Pending</button>
+                        <button class="dropdown-item" onclick="lapmingguan('{{$project->project_id}}')">Laporan Mingguan</button>
+                        <div>
+                            <table border="1">
+                                <form action="{{ route('rABS.index') }}" method="GET" class="form-horizontal">
+                                    <input type="hidden" name="id_show" id="id_show" value="{{$project->id}}">
+                                    <button class="dropdown-item">RAB</button>
+                                </form>
+                            </table>
+                        </div>
+                        <div>
+                            <table border="1">
+                                <form action="{{ route('revenueInvoices.index') }}" method="GET" class="form-horizontal">
+                                    <input type="hidden" name="project_idShow" id="project_idShow" value="{{$project->project_id}}">
+                                    <button class="dropdown-item">Revenue Invoices</button>
+                                </form>
+                            </table>
+                        </div>
+                    </div>
                 </td>
                 <td>
                     {!! Form::open(['route' => ['projects.destroy', $project->id], 'method' => 'delete']) !!}
@@ -64,3 +105,10 @@
         </tbody>
     </table>
 </div>
+{{--<div class="card-footer text-right">
+    <nav class="d-inline-block">
+        {{$projects->links()}}
+    </nav>
+</div>--}}
+@include('projects.modal')
+
