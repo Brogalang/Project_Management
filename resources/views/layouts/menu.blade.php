@@ -1,3 +1,9 @@
+<li class="nav-item {{ Request::is('clients*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('clients.index') }}">
+        <i class="nav-icon fa fa-users  text-primary"></i>
+        <span>Clients</span>
+    </a>
+</li>
 <li class="nav-item {{ Request::is('projects*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('projects.index') }}">
         <i class="nav-icon fa fa-tasks text-info"></i>

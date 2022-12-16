@@ -1,5 +1,5 @@
 <div class="row bg-danger p-2">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Divisi Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('divisi', 'Divisi') !!}</strong>
@@ -7,16 +7,21 @@
             {!! Form::text('divisi', Auth::user()->divisi->nama_div_ext, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Departement Field -->
         <div class="form-group col-sm-6">
+            <strong>{!! Form::label('departementv2', 'Departemen') !!}</strong>
+            <h5>{!! Form::label('departementv2', Auth::user()->sub_divisi->subdivisi) !!}</h5>
+            {!! Form::text('departementv2', Auth::user()->sub_divisi->subdivisi, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
+            {!! Form::text('codedepartementv2', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
+        </div>
+        <div class="form-group col-sm-6" hidden>
             <strong>{!! Form::label('departement', 'Departemen') !!}</strong>
-            <h5>{!! Form::label('departement', Auth::user()->sub_divisi->subdivisi) !!}</h5>
-            {!! Form::text('departement', Auth::user()->sub_divisi->subdivisi, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
-            {!! Form::text('codedepartement', Auth::user()->sub_divisi->dept_code, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
+            <h5>{!! Form::label('departement', $project->departement) !!}</h5>
+            {!! Form::text('departement', $project->departement, ['class' => 'form-control' , 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- Jabatan Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('jabatan', 'Jabatan') !!}</strong>
@@ -24,12 +29,20 @@
             {!! Form::text('jabatan', Auth::user()->jabatanUser->jabatan, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <!-- Sales Am Field -->
+        <div class="form-group col-sm-6">
+            <strong>{!! Form::label('sales_amv2', 'Sales AM') !!}</strong>
+            <h5>{!! Form::label('sales_amv2', Auth::user()->NIK . '-' . Auth::user()->Nama) !!}</h5>
+            {!! Form::text('sales_amv2', Auth::user()->NIK . '-' . Auth::user()->Nama, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
+        </div>
+    </div>
+    <div class="col-md-3" hidden>
         <!-- Sales Am Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('sales_am', 'Sales AM') !!}</strong>
-            <h5>{!! Form::label('sales_am', Auth::user()->NIK . '-' . Auth::user()->Nama) !!}</h5>
-            {!! Form::text('sales_am', Auth::user()->NIK . '-' . Auth::user()->Nama, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
+            <h5>{!! Form::label('sales_am', $project->sales_am) !!}</h5>
+            {!! Form::text('sales_am', $project->sales_am, ['class' => 'form-control', 'hidden' => 'hidden']) !!}
         </div>
     </div>
 </div>
@@ -63,7 +76,7 @@
         <!-- Jenis Project Field -->
         <div class="form-group col-sm-6">
             <strong>{!! Form::label('jenis_project', 'Jenis Proyek') !!}<span class="text-danger" aria-hidden="true">&starf;</span></strong>
-            {!! Form::select('jenis_project', ['Software' => 'Software', 'Hardware' => 'Hardware', 'Software & Hardware' => 'Software & Hardware', 'Manage Services' => 'Manage Services'], null, ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::select('jenis_project', ['Software' => 'Software', 'Hardware' => 'Hardware', 'Software & Hardware' => 'Software & Hardware', 'Manage Services' => 'Manage Services', 'Product' => 'Product'], null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
 

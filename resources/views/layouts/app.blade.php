@@ -46,7 +46,7 @@
         <link rel="stylesheet" href="{{asset('select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
+        @include('layouts.datatables_css')
         
     </head>
     <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -133,6 +133,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@2.1.16/dist/js/coreui.min.js"></script>
     <!-- Select2 -->
     <script src="{{asset('select2/js/select2.full.min.js')}}"></script>
+    @include('layouts.datatables_js')
 
     <script>
         $.ajaxSetup({
