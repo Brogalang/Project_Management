@@ -83,7 +83,7 @@ class projectController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+        // $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
 
         $depopt = DB::select("select * from tb_subdivisi a 
                             left join tbldivmaster b on a.iddivisi=b.id
@@ -127,8 +127,11 @@ class projectController extends AppBaseController
 
         if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
             $disabled="";
+            $divopt=DivisiModel::where('nama_div_ext','like','%'.$divuser->nama_div_ext.'%')->get();
         }else{
-            $disabled="disabled";
+            $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+            $disabled="";
+            // $disabled="disabled";
         }
 
         // echo"<pre>";
