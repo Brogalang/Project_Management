@@ -111,6 +111,10 @@ class projectController extends AppBaseController
                                         left join tb_subdivisi c on b.SubDivisi=c.id
                                         where c.id = '".Auth::user()->SubDivisi."'
                                     ");
+            }else{
+                $projects = project::orderby('id', 'DESC')
+                            ->where('sales_am', 'like' , "%".Auth::user()->Nama."%")
+                            ->get();
             }
             return $projects;
         }
