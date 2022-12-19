@@ -43,7 +43,7 @@ class projectController extends AppBaseController
                             left join tbldivmaster c on a.Divisi=c.id
                             where b.jabatan like '%Account Manager%' and c.nama_div_ext like '%Commercial%'
                             ");
-        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+        // $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
 
         if ($departement!='') {
             $projects = DB::select("select a.id as id,a.*,b.* from projects a 
@@ -64,7 +64,9 @@ class projectController extends AppBaseController
         $divuser=DivisiModel::where('id', '=', Auth::user()->Divisi)->first();
         if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
             $disabled="";
+            $divopt=DivisiModel::where('nama_div_ext','like','%'.$divuser->nama_div_ext.'%')->get();
         }else{
+            $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
             $disabled="disabled";
         }
         
