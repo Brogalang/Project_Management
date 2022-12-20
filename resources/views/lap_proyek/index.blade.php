@@ -62,7 +62,11 @@
                     </select>
                 </div>
                 </div>
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Tanggal</label>
                 <div class="col-sm-3">

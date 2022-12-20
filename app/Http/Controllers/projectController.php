@@ -43,7 +43,11 @@ class projectController extends AppBaseController
                             left join tbldivmaster c on a.Divisi=c.id
                             where b.jabatan like '%Account Manager%' and c.nama_div_ext like '%Commercial%'
                             ");
+<<<<<<< HEAD
         // $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+=======
+        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
 
         if ($departement!='') {
             $projects = DB::select("select a.id as id,a.*,b.* from projects a 
@@ -64,9 +68,13 @@ class projectController extends AppBaseController
         $divuser=DivisiModel::where('id', '=', Auth::user()->Divisi)->first();
         if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
             $disabled="";
+<<<<<<< HEAD
             $divopt=DivisiModel::where('nama_div_ext','like','%'.$divuser->nama_div_ext.'%')->get();
         }else{
             $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+=======
+        }else{
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
             $disabled="disabled";
         }
         
@@ -85,7 +93,11 @@ class projectController extends AppBaseController
      */
     public function index(Request $request)
     {
+<<<<<<< HEAD
         // $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+=======
+        $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
 
         $depopt = DB::select("select * from tb_subdivisi a 
                             left join tbldivmaster b on a.iddivisi=b.id
@@ -113,10 +125,13 @@ class projectController extends AppBaseController
                                         left join tb_subdivisi c on b.SubDivisi=c.id
                                         where c.id = '".Auth::user()->SubDivisi."'
                                     ");
+<<<<<<< HEAD
             }else{
                 $projects = project::orderby('id', 'DESC')
                             ->where('sales_am', 'like' , "%".Auth::user()->Nama."%")
                             ->get();
+=======
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
             }
             return $projects;
         }
@@ -129,11 +144,16 @@ class projectController extends AppBaseController
 
         if (strpos($divuser->nama_div_ext, "Commercial")!== false) {
             $disabled="";
+<<<<<<< HEAD
             $divopt=DivisiModel::where('nama_div_ext','like','%'.$divuser->nama_div_ext.'%')->get();
         }else{
             $divopt=DivisiModel::where('nama_div_ext','like','%Commercial%')->get();
             $disabled="";
             // $disabled="disabled";
+=======
+        }else{
+            $disabled="disabled";
+>>>>>>> 4e258ddf6a9cd5fa6e2fff09bf3f15fd45d0bafb
         }
 
         // echo"<pre>";
